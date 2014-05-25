@@ -11,8 +11,7 @@ angular.module( 'meg.menu', [
         controller: 'MenuCtrl',
         templateUrl: 'menu/menu.tpl.html'
       }
-    },
-    data:{ pageTitle: 'Menu' }
+    }
   });
 })
 

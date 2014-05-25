@@ -1,8 +1,9 @@
 angular.module( 'meg.home', [
-  'ui.router'
+  'ui.router',
+  'meg.gameStateService'
 ])
 
-.config(function config( $stateProvider ) {
+.config(function config( $stateProvider) {
   $stateProvider.state( 'home', {
     url: '/home',
     views: {
@@ -10,12 +11,11 @@ angular.module( 'meg.home', [
         controller: 'HomeCtrl',
         templateUrl: 'home/home.tpl.html'
       }
-    },
-    data:{ pageTitle: 'Home' }
+    }
   });
 })
 
-.controller( 'HomeCtrl', function HomeController( $scope, $modal, $location ) {
+.controller( 'HomeCtrl', function HomeController( $scope, $modal, $location, gameStateService ) {
 
     var puz = [];
     puz[ 0] = [0,0,21,0 ,0];
@@ -119,13 +119,9 @@ angular.module( 'meg.home', [
     puz[98] = [4 ,21,31,21,4 ];
     puz[99] = [31,31,31,31,31];
 
-    var squares = [];
-
-    var gameState = {
-        selectedLevel: 1,
-        movesLeft: 15,
-        squares: squares
-    };
+    var gameState = gameStateService.model;
+    var squares = gameState.squares;
+    var bestSolutions = gameState.bestSolutions;
 
     var showMenu = function() {
         $location.path("menu");
@@ -146,7 +142,15 @@ angular.module( 'meg.home', [
 
     var initBoard = function() {
         initSquares(gameState.selectedLevel);
+        gameState.movesTaken = 0;
         gameState.movesLeft = 15;
+    };
+
+    var replay = function() {
+        if (!gameState.isLevelLocked) {
+            gameState.isReplay = true;
+            initBoard();
+        }
     };
 
     var isGameWon = function() {
@@ -213,6 +217,7 @@ angular.module( 'meg.home', [
     var selectPreviousLevel = function() {
         if (gameState.selectedLevel > 1) {
             gameState.selectedLevel--;
+            gameState.isReplay = false;
             initBoard();
         }
     };
@@ -220,6 +225,7 @@ angular.module( 'meg.home', [
     var selectNextLevel = function() {
         if (gameState.selectedLevel < 100) {
             gameState.selectedLevel++;
+            gameState.isReplay = false;
             initBoard();
         }
     };
@@ -229,24 +235,49 @@ angular.module( 'meg.home', [
            title: "No Moves Left!",
            message: "I know you can do this. Give it another go?",
            okText: "Retry",
-           okHandler: initBoard,
+           okHandler: replay,
            cancelText: "Quit",
            cancelHandler: showMenu
         });
     };
 
+    var isLevelPreviouslySolved = function(level) {
+        return (level <= bestSolutions.length);
+    };
+
+    var updateBestSolutions = function() {
+        if (gameState.movesTaken < gameState.bestSolution) {
+            gameState.bestSolution = gameState.movesTaken;
+            if (isLevelPreviouslySolved(gameState.selectedLevel)) {
+                bestSolutions[gameState.selectedLevel-1] = gameState.bestSolution;
+            } else {
+                bestSolutions.push(gameState.bestSolution);
+            }
+        }
+    };
+
     var gameWon = function() {
+        updateBestSolutions();
         showModal({
-            title: "Level Completed",
+            title: "Level Solved",
             message: "You are awesome! Ready for the next level?",
             okText: "Next Level",
             okHandler: selectNextLevel,
-            cancelText: "Quit",
-            cancelHandler: showMenu
+            cancelText: "Replay",
+            cancelHandler: replay
         });
     };
 
     $scope.gameState = gameState;
+
+    $scope.$watch('gameState.selectedLevel', function(selectedLevel) {
+        gameState.isLevelLocked = (selectedLevel > (bestSolutions.length + 1));
+
+        var isLevelSolved = isLevelPreviouslySolved(selectedLevel);
+
+        gameState.isLevelSolved = isLevelSolved;
+        gameState.bestSolution = isLevelSolved ? bestSolutions[selectedLevel - 1] : 999;
+    });
 
     $scope.selectPreviousLevel = selectPreviousLevel;
 
@@ -260,6 +291,7 @@ angular.module( 'meg.home', [
             var toggleIndex = toggleIndexes[i];
             gameState.squares[toggleIndex].selected = !gameState.squares[toggleIndex].selected;
         }
+        gameState.movesTaken = gameState.movesTaken + 1;
         gameState.movesLeft = gameState.movesLeft - 1;
 
         if (isGameWon()) {
@@ -269,6 +301,20 @@ angular.module( 'meg.home', [
             gameLost();
         }
     };
+
+    $scope.showMenu = showMenu;
+
+    $scope.replay = replay;
+
+    $scope.isShowSolved = function() {
+        return gameState.isLevelSolved && !gameState.isReplay;
+    };
+
+    $scope.starsEarned = [
+            { id: 0, earned: true},
+            { id: 1, earned: true},
+            { id: 2, earned: false}
+        ];
 
     initBoard();
 });
