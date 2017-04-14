@@ -37,7 +37,6 @@ a:hover {
     flex: 0 0 400px;
     background-color: rgba(69, 69, 132, 0.5);
     background-repeat: no-repeat;
-    background-size: 300px 300px;
     background-position: center;
     width: 400px;
     height: 300px;
@@ -72,6 +71,10 @@ a:hover {
 
 .screenshot--bf-viz {
     background-image: url('assets/bf-viz-screenshot.png');
+}
+
+.screenshot--crafty-racer {
+    background-image: url('assets/crafty-racer-screenshot.png');
 }
 
 .project-details {
