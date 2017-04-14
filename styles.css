@@ -66,15 +66,27 @@ a:hover {
 }
 
 .screenshot--make-em-green {
-    background-image: url('assets/make-em-green-screenshot.png');
+    background-image: url('assets/make-em-green-screencast-frame.gif');
+}
+
+.project-container:hover .screenshot--make-em-green {
+    background-image: url('assets/make-em-green-screencast.gif');
 }
 
 .screenshot--bf-viz {
-    background-image: url('assets/bf-viz-screenshot.png');
+    background-image: url('assets/bf-viz-screencast-frame.gif');
+}
+
+.project-container:hover .screenshot--bf-viz {
+    background-image: url('assets/bf-viz-screencast.gif');
 }
 
 .screenshot--crafty-racer {
-    background-image: url('assets/crafty-racer-screenshot.png');
+    background-image: url('assets/crafty-racer-screencast-frame.gif');
+}
+
+.project-container:hover .screenshot--crafty-racer {
+    background-image: url('assets/crafty-racer-screencast.gif');
 }
 
 .project-details {
