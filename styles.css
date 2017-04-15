@@ -9,12 +9,14 @@ body {
     padding-top: 30px;
 }
 
-a, a:visited {
+a,
+a:visited {
     text-decoration: none;
     color: #2061e0;
 }
 
-a:hover {
+a:hover,
+a:focus {
     text-decoration: underline;
 }
 
@@ -28,8 +30,19 @@ a:hover {
     transition: transform 300ms;
 }
 
-.project-container:hover {
-    transform: scale(1.1);
+@media(max-width: 800px) {
+    .project-container {
+        flex-direction: column-reverse;
+    }
+
+    .project-container .project-screenshot {
+        flex: 0 0 300px;
+    }
+}
+
+.project-container:hover,
+.project-container:focus {
+    transform: scale(1.05);
     transition: transform 300ms;
 }
 
@@ -45,6 +58,7 @@ a:hover {
     align-items: center;
     justify-content: center;
     transition: opacity 300ms ease;
+    opacity: 0.8;
 }
 
 .play-icon {
@@ -54,22 +68,24 @@ a:hover {
     width: 60px;
     height: 60px;
     cursor: pointer;
+}
+
+.project-container:hover .project-screenshot,
+.project-container:focus .project-screenshot {
+    opacity: 1;
+}
+
+.project-container:hover .play-icon,
+.project-container:focus .play-icon {
     display: none;
-}
-
-.project-screenshot:hover {
-    opacity: 0.8;
-}
-
-.project-screenshot:hover .play-icon {
-    display: inline-block;
 }
 
 .screenshot--make-em-green {
     background-image: url('assets/make-em-green-screencast-frame.gif');
 }
 
-.project-container:hover .screenshot--make-em-green {
+.project-container:hover .screenshot--make-em-green,
+.project-container:focus .screenshot--make-em-green {
     background-image: url('assets/make-em-green-screencast.gif');
 }
 
@@ -77,7 +93,8 @@ a:hover {
     background-image: url('assets/bf-viz-screencast-frame.gif');
 }
 
-.project-container:hover .screenshot--bf-viz {
+.project-container:hover .screenshot--bf-viz,
+.project-container:focus .screenshot--bf-viz {
     background-image: url('assets/bf-viz-screencast.gif');
 }
 
@@ -85,7 +102,8 @@ a:hover {
     background-image: url('assets/crafty-racer-screencast-frame.gif');
 }
 
-.project-container:hover .screenshot--crafty-racer {
+.project-container:hover .screenshot--crafty-racer,
+.project-container:focus .screenshot--crafty-racer {
     background-image: url('assets/crafty-racer-screencast.gif');
 }
 
@@ -93,11 +111,32 @@ a:hover {
     flex: 1;
 }
 
+.project-details-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 16px
+}
+
 .project-title {
-    font-size: 30px;
-    line-height: 30px;
+    display: inline-block;
+    font-size: 32px;
+    line-height: 32px;
     color: #191970;
-    margin-bottom: 20px
+}
+
+.project-link {
+    opacity: 0;
+    transition: opacity 300ms ease;
+
+    font-size: 20px;
+    line-height: 20px;
+    background-color: rgba(24, 24, 24, 0.1);
+    padding: 6px;
+}
+
+.project-container:hover .project-link,
+.project-container:focus .project-link {
+    opacity: 1;
 }
 
 .project-details-item {
