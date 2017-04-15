@@ -151,3 +151,9 @@ a:focus {
 .project-details-item-content {
     display: inline-block;
 }
+
+.warning-message {
+    color: white;
+    background: rgba(167, 15, 15, 0.8);
+    padding: 4px 6px;
+}
