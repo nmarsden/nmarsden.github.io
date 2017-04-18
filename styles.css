@@ -58,7 +58,7 @@ a:hover {
 
 .project-screenshot {
     flex: 0 0 400px;
-    background-color: rgba(69, 69, 132, 0.5);
+    background-color: rgba(22, 22, 22, 0.1);
     background-repeat: no-repeat;
     background-position: center;
     width: 400px;
@@ -96,6 +96,15 @@ a:hover {
     background-image: url('assets/make-em-green-screencast.gif');
 }
 
+/* preload make-em-green-screencast.gif used on hover*/
+.screenshot--make-em-green:before {
+    content: '';
+    background-image: url('assets/make-em-green-screencast.gif');
+    width: 0;
+    height: 0;
+    visibility: hidden;
+}
+
 .screenshot--bf-viz {
     background-image: url('assets/bf-viz-screencast-frame.gif');
 }
@@ -104,12 +113,30 @@ a:hover {
     background-image: url('assets/bf-viz-screencast.gif');
 }
 
+/* preload bf-viz-screencast.gif used on hover*/
+.screenshot--bf-viz:before {
+    content: '';
+    background-image: url('assets/bf-viz-screencast.gif');
+    width: 0;
+    height: 0;
+    visibility: hidden;
+}
+
 .screenshot--crafty-racer {
     background-image: url('assets/crafty-racer-screencast-frame.gif');
 }
 
 .project-container:hover .screenshot--crafty-racer {
     background-image: url('assets/crafty-racer-screencast.gif');
+}
+
+/* preload crafty-racer-screencast.gif used on hover*/
+.screenshot--crafty-racer:before {
+    content: '';
+    background-image: url('assets/crafty-racer-screencast.gif');
+    width: 0;
+    height: 0;
+    visibility: hidden;
 }
 
 .project-details {
