@@ -88,6 +88,23 @@ a:hover {
     display: none;
 }
 
+.screenshot--togglefish {
+    background-image: url('assets/togglefish-screencast-frame.gif');
+}
+
+.project-container:hover .screenshot--togglefish {
+    background-image: url('assets/togglefish-screencast.gif');
+}
+
+/* preload togglefish-screencast.gif used on hover*/
+.screenshot--togglefish:before {
+    content: '';
+    background-image: url('assets/togglefish-screencast.gif');
+    width: 0;
+    height: 0;
+    visibility: hidden;
+}
+
 .screenshot--make-em-green {
     background-image: url('assets/make-em-green-screencast-frame.gif');
 }
@@ -181,6 +198,7 @@ a:hover {
 
 .project-details-item-content {
     display: inline-block;
+    margin-top: 5px;
 }
 
 .warning-message {
