@@ -49,9 +49,6 @@ a:hover {
 }
 
 .main-banner {
-    font-size: 40px;
-    line-height: 40px;
-    color: var(--heading-colour);
     margin: 0 auto;
     max-width: 1000px;
     text-align: center;
@@ -59,13 +56,61 @@ a:hover {
     padding: 20px;
 }
 
+.heading {
+    font-size: 40px;
+    line-height: 40px;
+    color: var(--heading-colour);
+}
+
+.sub-heading {
+    margin-top: 10px;
+    font-size: 20px;
+    line-height: 20px;
+}
+
+.instructions {
+    font-size: 20px;
+    font-weight: 100;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.chevron {
+    margin-top: 20px;
+    display: block;
+    -webkit-animation: pulse 2s infinite;
+    animation: pulse 2s infinite;
+    color: var(--heading-colour);
+}
+
+.chevron:before {
+    top: 0;
+    border-style: solid;
+    border-width: 0.25em 0.25em 0 0;
+    content: '';
+    display: inline-block;
+    height: 20px;
+    position: relative;
+    transform: rotate(135deg);
+    vertical-align: top;
+    width: 20px;
+}
+
+@keyframes pulse {
+    0%   { transform: translate(0, 0); }
+    50%  { transform: translate(0, 10px); }
+    100% { transform: translate(0, 0); }
+}
+
 .project-container {
     display: flex;
     padding: 20px;
-    margin: 20px auto;
+    margin: 0 auto;
     background-color: rgba(128, 128, 128, 0.3);
     max-width: 1000px;
-    transition: transform 300ms;
+    opacity: 0.5;
+    transform: scale(0.8);
+    transition: all 1000ms;
 }
 
 @media(max-width: 800px) {
@@ -78,9 +123,15 @@ a:hover {
     }
 }
 
-.project-container:hover {
-    transform: scale(1.05);
-    transition: transform 300ms;
+.scroll-step {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.scroll-step.active .project-container {
+    opacity: 1;
+    transform: scale(1);
 }
 
 .project-screenshot {
@@ -98,28 +149,15 @@ a:hover {
     opacity: 0.8;
 }
 
-.play-icon {
-    background-image: url(assets/play-circle-o.svg);
-    background-repeat: no-repeat;
-    background-size: 60px 60px;
-    width: 60px;
-    height: 60px;
-    cursor: pointer;
-}
-
-.project-container:hover .project-screenshot {
+.scroll-step.active .project-screenshot {
     opacity: 1;
-}
-
-.project-container:hover .play-icon {
-    display: none;
 }
 
 .screenshot--togglefish {
     background-image: url('assets/togglefish-screencast-frame.gif');
 }
 
-.project-container:hover .screenshot--togglefish {
+.scroll-step.active .screenshot--togglefish {
     background-image: url('assets/togglefish-screencast.gif');
 }
 
@@ -136,7 +174,7 @@ a:hover {
     background-image: url('assets/make-em-green-screencast-frame.gif');
 }
 
-.project-container:hover .screenshot--make-em-green {
+.scroll-step.active .screenshot--make-em-green {
     background-image: url('assets/make-em-green-screencast.gif');
 }
 
@@ -153,7 +191,7 @@ a:hover {
     background-image: url('assets/bf-viz-screencast-frame.gif');
 }
 
-.project-container:hover .screenshot--bf-viz {
+.scroll-step.active .screenshot--bf-viz {
     background-image: url('assets/bf-viz-screencast.gif');
 }
 
@@ -170,7 +208,7 @@ a:hover {
     background-image: url('assets/crafty-racer-screencast-frame.gif');
 }
 
-.project-container:hover .screenshot--crafty-racer {
+.scroll-step.active .screenshot--crafty-racer {
     background-image: url('assets/crafty-racer-screencast.gif');
 }
 
