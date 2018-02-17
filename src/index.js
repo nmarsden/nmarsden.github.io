@@ -19,3 +19,12 @@ onePageScroll(".main", {
                                    // the browser's width is less than 600, the fallback will kick in.
 });
 
+// Hide loader
+const loader = document.querySelector('.loader');
+loader.style.display = 'none';
+
+// Show main
+const main = document.querySelector('.main');
+main.style.display = 'block';
+
+
