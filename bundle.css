@@ -48,6 +48,66 @@ a:hover {
     100% { transform: scale(2) rotateZ(360deg); }
 }
 
+.ball-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: move-ball infinite alternate 4s ease-in-out;
+}
+
+.ball-container--2 {
+    animation: move-ball infinite alternate 8s ease-in-out;
+}
+
+.ball-container--3 {
+    animation: move-ball infinite alternate 16s ease-in-out;
+}
+
+.ball-container--4 {
+    animation: move-ball infinite alternate 32s ease-in-out;
+}
+
+.ball {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: white;
+    animation: glow-ball alternate infinite 8s ease-in-out;
+}
+
+.ball--left {
+    margin-left: -275px;
+}
+
+.ball--right {
+    margin-left: 275px;
+}
+
+.ball--top {
+    margin-top: -275px;
+}
+
+.ball--bottom {
+    margin-top: 275px;
+}
+
+@keyframes move-ball {
+    0%   { transform: rotateZ(0)      }
+    100% { transform: rotateZ(360deg) }
+}
+
+@keyframes glow-ball {
+    0%   { opacity: 0; }
+    70%  { opacity: 0.3; }
+    100% { opacity: 1;   }
+}
+
 .loader {
     z-index: 1;
     position: fixed;
