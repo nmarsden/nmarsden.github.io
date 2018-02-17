@@ -48,12 +48,36 @@ a:hover {
     100% { transform: scale(2) rotateZ(360deg); }
 }
 
+.main-container {
+    overflow: hidden;
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.main-container:before {
+    content: '';
+    position: absolute;
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    box-shadow: 0 0 140px 40px white;
+    animation: glow alternate infinite 8s ease-in-out;
+}
+
+@keyframes glow {
+    0%   { opacity: 0; }
+    70%  { opacity: 0.3; }
+    100% { opacity: 1;   }
+}
+
 .main-banner {
-    margin: 0 auto;
-    max-width: 1000px;
     text-align: center;
     background-color: rgba(128, 128, 128, 0.3);
-    padding: 20px;
+    padding: 20px 50px;
 }
 
 .heading {
@@ -68,17 +92,22 @@ a:hover {
     line-height: 20px;
 }
 
-.instructions {
+.instructions-container {
     font-size: 20px;
     font-weight: 100;
     margin: 0 auto;
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.instructions {
+    margin-top: 20px;
 }
 
 .chevron {
-    margin-top: 20px;
+    margin: 0 auto;
     display: block;
-    -webkit-animation: pulse 2s infinite;
     animation: pulse 2s infinite;
     color: var(--heading-colour);
 }
@@ -105,7 +134,6 @@ a:hover {
 .project-container {
     display: flex;
     padding: 20px;
-    margin: 0 auto;
     background-color: rgba(128, 128, 128, 0.3);
     max-width: 1000px;
     opacity: 0.5;
@@ -127,6 +155,7 @@ a:hover {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
 }
 
 .scroll-step.active .project-container {
