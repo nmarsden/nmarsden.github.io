@@ -57,19 +57,19 @@ a:hover {
     display: flex;
     justify-content: center;
     align-items: center;
-    animation: move-ball infinite alternate 4s ease-in-out;
+    animation: rotate-ball-container infinite 4s linear;
 }
 
 .ball-container--2 {
-    animation: move-ball infinite alternate 8s ease-in-out;
+    animation-delay: -0.25s;
 }
 
 .ball-container--3 {
-    animation: move-ball infinite alternate 16s ease-in-out;
+    animation-delay: -0.5s;
 }
 
 .ball-container--4 {
-    animation: move-ball infinite alternate 32s ease-in-out;
+    animation-delay: -0.75s;
 }
 
 .ball {
@@ -78,34 +78,52 @@ a:hover {
     height: 10px;
     border-radius: 50%;
     background-color: white;
-    animation: glow-ball alternate infinite 8s ease-in-out;
-}
-
-.ball--left {
-    margin-left: -275px;
-}
-
-.ball--right {
-    margin-left: 275px;
 }
 
 .ball--top {
     margin-top: -275px;
+    animation: glow-ball alternate infinite 8s ease-in-out,
+               move-ball-y 4s ease-in-out 0s infinite alternate;
+}
+
+.ball--right {
+    margin-left: 275px;
+    animation: glow-ball alternate infinite 8s ease-in-out,
+               move-ball-x 4s ease-in-out -4s infinite alternate;
+}
+
+.ball--left {
+    margin-left: -275px;
+    animation: glow-ball alternate infinite 8s ease-in-out,
+               move-ball-x 4s ease-in-out 0s infinite alternate;
 }
 
 .ball--bottom {
     margin-top: 275px;
+    animation: glow-ball alternate infinite 8s ease-in-out,
+               move-ball-y 4s ease-in-out -4s infinite alternate;
 }
 
-@keyframes move-ball {
+@keyframes rotate-ball-container {
     0%   { transform: rotateZ(0)      }
     100% { transform: rotateZ(360deg) }
 }
 
 @keyframes glow-ball {
-    0%   { opacity: 0; }
+    0%   { opacity: 0;   }
+    35%  { opacity: 0;   }
     70%  { opacity: 0.3; }
     100% { opacity: 1;   }
+}
+
+@keyframes move-ball-x {
+    0%   { transform: translateX(-100px) }
+    100% { transform: translateX(100px)  }
+}
+
+@keyframes move-ball-y {
+    0%   { transform: translateY(-100px) }
+    100% { transform: translateY(100px)  }
 }
 
 .loader {
