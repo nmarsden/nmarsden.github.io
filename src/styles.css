@@ -40,11 +40,17 @@ a:hover {
     perspective: 150px;
     perspective-origin: 50% 50%;
     transform-style: preserve-3d;
-    background-color: #0b2f6d;
 
     justify-content: center;
     align-items: center;
+    transition: background-color 600ms;
 }
+
+.background-container.background-1 { background-color: #0c8ee2; } /* Main */
+.background-container.background-2 { background-color: #0b2f6d; } /* Togglefish */
+.background-container.background-3 { background-color: #266b3b; } /* Make 'em green */
+.background-container.background-4 { background-color: #2b002b; } /* BF Viz */
+.background-container.background-5 { background-color: #962727; } /* Crafty Racer */
 
 .background-circle {
     border-radius: 50%;

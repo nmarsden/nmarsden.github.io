@@ -2,6 +2,16 @@ import './styles.css';
 import './libs/purejs-onepage-scroll/onepage-scroll.css';
 import { onePageScroll } from './libs/purejs-onepage-scroll/onepagescroll.js';
 
+let previousBackgroundClass = 'background-1';
+
+const handleStepEnter = (index, next_el) => {
+  let newBackgroundClass = `background-${index}`;
+
+  const backgroundContainer = document.querySelector('.background-container');
+  backgroundContainer.classList.remove(previousBackgroundClass);
+  backgroundContainer.classList.add(newBackgroundClass);
+  previousBackgroundClass = newBackgroundClass;
+};
 
 onePageScroll(".main", {
   sectionContainer: ".scroll-step",// sectionContainer accepts any kind of selector in case you don't want to use section
@@ -11,7 +21,7 @@ onePageScroll(".main", {
   pagination: false,               // You can either show or hide the pagination. Toggle true for show, false for hide.
   updateURL: false,                // Toggle this true if you want the URL to be updated automatically when the user scroll to each page.
   // beforeMove: handleStepExit,      // This option accepts a callback function. The function will be called before the page moves.
-  // afterMove: handleStepEnter,      // This option accepts a callback function. The function will be called after the page moves.
+  afterMove: handleStepEnter,      // This option accepts a callback function. The function will be called after the page moves.
   loop: false,                     // You can have the page loop back to the top/bottom when the user navigates at up/down on the first/last page.
   keyboard: true,                  // You can activate the keyboard controls
   responsiveFallback: false        // You can fallback to normal page scroll by defining the width of the browser in which
