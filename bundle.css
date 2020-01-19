@@ -1,3 +1,9 @@
+@font-face {
+    font-family: 'Crafty Girls';
+    font-style: normal;
+    font-weight: 400;
+    src: url(f8543f63f58dc9c4d1c24b9d495e5d3b.ttf) format('truetype');
+}
 
 :root {
     --main-text-colour: white;
@@ -6,7 +12,7 @@
 }
 
 body {
-    font-family: sans-serif;
+    font-family: 'Crafty Girls', sans-serif;
     font-size: 16px;
     line-height: 22px;
     color: var(--main-text-colour);
@@ -148,9 +154,9 @@ a:hover {
 }
 
 .sub-heading {
-    margin-top: 10px;
-    font-size: 20px;
-    line-height: 20px;
+    margin-top: 20px;
+    font-size: 17px;
+    line-height: 17px;
 }
 
 .instructions-placeholder {
