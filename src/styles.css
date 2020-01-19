@@ -34,96 +34,40 @@ a:hover {
     perspective: 150px;
     perspective-origin: 50% 50%;
     transform-style: preserve-3d;
-}
+    background-color: #0b2f6d;
 
-.background {
-    width: 100%;
-    background-color: #111111;
-    background-image: url(assets/hexagons.svg);
-    animation: 120s background-move linear infinite;
-}
-
-@keyframes background-move {
-    0%   { transform: scale(2) rotateZ(0); }
-    100% { transform: scale(2) rotateZ(360deg); }
-}
-
-.ball-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    display: flex;
     justify-content: center;
     align-items: center;
-    animation: rotate-ball-container infinite 4s linear;
 }
 
-.ball-container--2 {
-    animation-delay: -0.25s;
-}
-
-.ball-container--3 {
-    animation-delay: -0.5s;
-}
-
-.ball-container--4 {
-    animation-delay: -0.75s;
-}
-
-.ball {
-    position: absolute;
-    width: 10px;
-    height: 10px;
+.background-circle {
     border-radius: 50%;
     background-color: white;
+    opacity: 0;
+    width: 10vw;
+    height: 10vw;
+    animation: background-circle-move infinite 10s linear alternate-reverse;
 }
 
-.ball--top {
-    margin-top: -275px;
-    animation: glow-ball alternate infinite 8s ease-in-out,
-               move-ball-y 4s ease-in-out 0s infinite alternate;
-}
+.background-circle:nth-child(1) { animation-delay: -1s; animation-duration: 10s; }
+.background-circle:nth-child(2) { animation-delay: -2s; animation-duration: 17s; animation-name: background-circle-move-large; }
+.background-circle:nth-child(3) { animation-delay: -3s; animation-duration: 7s; }
+.background-circle:nth-child(4) { animation-delay: -4s; animation-duration: 9s; }
+.background-circle:nth-child(5) { animation-delay: -5s; animation-duration: 11s; }
+.background-circle:nth-child(6) { animation-delay: -6s; animation-duration: 15s; animation-name: background-circle-move-large; }
+.background-circle:nth-child(7) { animation-delay: -7s; animation-duration: 10s; }
+.background-circle:nth-child(8) { animation-delay: -8s; animation-duration: 16s; animation-name: background-circle-move-large; }
+.background-circle:nth-child(9) { animation-delay: -9s; animation-duration: 8s; }
 
-.ball--right {
-    margin-left: 275px;
-    animation: glow-ball alternate infinite 8s ease-in-out,
-               move-ball-x 4s ease-in-out -4s infinite alternate;
+@keyframes background-circle-move {
+    0%   { transform: translateY(-50vh); opacity: 0; }
+    50%  { transform: translateY(0vh);   opacity: 0.1; }
+    100% { transform: translateY(50vh);  opacity: 0; }
 }
-
-.ball--left {
-    margin-left: -275px;
-    animation: glow-ball alternate infinite 8s ease-in-out,
-               move-ball-x 4s ease-in-out 0s infinite alternate;
-}
-
-.ball--bottom {
-    margin-top: 275px;
-    animation: glow-ball alternate infinite 8s ease-in-out,
-               move-ball-y 4s ease-in-out -4s infinite alternate;
-}
-
-@keyframes rotate-ball-container {
-    0%   { transform: rotateZ(0)      }
-    100% { transform: rotateZ(360deg) }
-}
-
-@keyframes glow-ball {
-    0%   { opacity: 0;   }
-    35%  { opacity: 0;   }
-    70%  { opacity: 0.3; }
-    100% { opacity: 1;   }
-}
-
-@keyframes move-ball-x {
-    0%   { transform: translateX(-100px) }
-    100% { transform: translateX(100px)  }
-}
-
-@keyframes move-ball-y {
-    0%   { transform: translateY(-100px) }
-    100% { transform: translateY(100px)  }
+@keyframes background-circle-move-large {
+    0%   { transform: scale(1.5) translateY(-45vh); opacity: 0; }
+    50%  { transform: scale(1.5) translateY(0vh);   opacity: 0.1; }
+    100% { transform: scale(1.5) translateY(45vh);  opacity: 0; }
 }
 
 .loader {
@@ -138,6 +82,18 @@ a:hover {
     align-items: center;
 }
 
+.main-loading-container {
+    overflow: hidden;
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    animation: glow alternate infinite 1.5s linear;
+}
+
 .main-container {
     overflow: hidden;
     width: 320px;
@@ -146,6 +102,7 @@ a:hover {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    animation: main-move 2s ease-in-out forwards;
 }
 
 .main-container:before {
@@ -156,10 +113,20 @@ a:hover {
     border-radius: 50%;
     box-shadow: 0 0 140px 40px white;
     animation: glow alternate infinite 8s ease-in-out;
+    opacity: 0;
+    animation-delay: 5s;
 }
 
 .loader .main-container:before {
     display: none;
+}
+
+@keyframes main-move {
+    0%   { opacity: 0; transform: translateY(-50vh); }
+    70%  { transform: translateY(10vh); }
+    85%  { transform: translateY(-5vh); }
+    99%  { transform: translateY(0); }
+    100% { opacity: 1; transform: none; }
 }
 
 @keyframes glow {
