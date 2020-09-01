@@ -1,7 +1,7 @@
 const path = require('path');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   entry: './src/index.js',
@@ -14,25 +14,30 @@ module.exports = {
     path: path.resolve(__dirname, '.')
   },
   plugins: [
-    new CleanWebpackPlugin(['dist']),
+    new CleanWebpackPlugin({
+      cleanOnceBeforeBuildPatterns: ['*.gif','*.ttf']
+    }),
     new HtmlWebpackPlugin({
       template: 'src/index.html',
       hash: true
     }),
-    new ExtractTextPlugin("bundle.css")
+    new MiniCssExtractPlugin({
+      filename: 'bundle.css'
+    })
   ],
   module: {
     rules: [
       {
         test: require.resolve('./src/libs/purejs-onepage-scroll/onepagescroll.js'),
-        use: 'exports-loader?onePageScroll=onePageScroll'
+        loader: 'exports-loader',
+        options: {
+          type: 'commonjs',
+          exports: 'onePageScroll',
+        },
       },
       {
         test: /\.css$/,
-        use: ExtractTextPlugin.extract({
-          fallback: "style-loader",
-          use: "css-loader"
-        })
+        use: [ MiniCssExtractPlugin.loader, 'css-loader' ]
       },
       {
         test: /\.(png|svg|jpg|gif|ttf)$/,
