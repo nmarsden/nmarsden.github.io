@@ -4,7 +4,8 @@
   "description": "Web project website",
   "scripts": {
     "build": "webpack",
-    "start": "webpack-dev-server --https --host:0.0.0.0 --openPage=https://localhost:8080"
+    "start": "webpack-dev-server --host 0.0.0.0 --openPage=http://localhost:8080",
+    "start-https": "webpack-dev-server --https --host 0.0.0.0 --openPage=https://localhost:8080"
   },
   "repository": {
     "type": "git",
