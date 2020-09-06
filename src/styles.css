@@ -9,6 +9,8 @@
     --main-text-colour: white;
     --heading-colour: #c7c7ff;
     --link-colour: #00abff;
+    --content-text-colour: #eeeeee;
+    --background-colour: 12, 142, 226; /* #0c8ee2; */
 }
 
 body {
@@ -44,16 +46,17 @@ a:hover {
     justify-content: center;
     align-items: center;
     transition: background-color 600ms;
+    background-color: rgb(var(--background-colour));
 }
 
-.background-container.background-1 { background-color: #0c8ee2; } /* Main */
-.background-container.background-2 { background-color: #0b2f6d; } /* Purr Plex */
-.background-container.background-3 { background-color: #050618; } /* Fireworks */
-.background-container.background-4 { background-color: #c5770e; } /* Crawly */
-.background-container.background-5 { background-color: #0b2f6d; } /* Togglefish */
-.background-container.background-6 { background-color: #266b3b; } /* Make 'em green */
-.background-container.background-7 { background-color: #2b002b; } /* BF Viz */
-.background-container.background-8 { background-color: #962727; } /* Crafty Racer */
+.viewing-page-1 { --background-colour: 12,  142, 226; } /* #0c8ee2: Main */
+.viewing-page-2 { --background-colour: 11,  47,  109; } /* #0b2f6d: Purr Plex */
+.viewing-page-3 { --background-colour: 5,   6,   24;  } /* #050618: Fireworks */
+.viewing-page-4 { --background-colour: 197, 119, 14;  } /* #c5770e: Crawly */
+.viewing-page-5 { --background-colour: 11,  47,  109; } /* #0b2f6d: Togglefish */
+.viewing-page-6 { --background-colour: 38,  107, 59;  } /* #266b3b: Make 'em green */
+.viewing-page-7 { --background-colour: 43,  0,   43;  } /* #2b002b: BF Viz */
+.viewing-page-8 { --background-colour: 150, 39,  39   } /* #962727: Crafty Racer */
 
 .background-circle {
     border-radius: 50%;
@@ -221,13 +224,19 @@ a:hover {
     transition: all 1000ms;
 }
 
-@media(max-width: 800px) {
+@media(min-height: 650px) {
     .project-container {
         flex-direction: column-reverse;
     }
 
     .project-container .project-screenshot {
         flex: 0 0 300px;
+        margin: 20px auto;
+    }
+
+    .project-container .project-screenshot-container {
+        transition: background-color 600ms;
+        background-color: rgba(var(--background-colour), 0.5);
     }
 }
 
@@ -241,6 +250,10 @@ a:hover {
 .scroll-step.active .project-container {
     opacity: 1;
     transform: scale(1);
+}
+
+.project-screenshot-container {
+    background-color:transparent;
 }
 
 .project-screenshot {
@@ -294,30 +307,12 @@ a:hover {
     background-image: url('assets/togglefish-screencast.gif');
 }
 
-/* preload togglefish-screencast.gif used on hover*/
-.screenshot--togglefish:before {
-    content: '';
-    background-image: url('assets/togglefish-screencast.gif');
-    width: 0;
-    height: 0;
-    visibility: hidden;
-}
-
 .screenshot--make-em-green {
     background-image: url('assets/make-em-green-screencast-frame.gif');
 }
 
 .scroll-step.active .screenshot--make-em-green {
     background-image: url('assets/make-em-green-screencast.gif');
-}
-
-/* preload make-em-green-screencast.gif used on hover*/
-.screenshot--make-em-green:before {
-    content: '';
-    background-image: url('assets/make-em-green-screencast.gif');
-    width: 0;
-    height: 0;
-    visibility: hidden;
 }
 
 .screenshot--bf-viz {
@@ -328,30 +323,12 @@ a:hover {
     background-image: url('assets/bf-viz-screencast.gif');
 }
 
-/* preload bf-viz-screencast.gif used on hover*/
-.screenshot--bf-viz:before {
-    content: '';
-    background-image: url('assets/bf-viz-screencast.gif');
-    width: 0;
-    height: 0;
-    visibility: hidden;
-}
-
 .screenshot--crafty-racer {
     background-image: url('assets/crafty-racer-screencast-frame.gif');
 }
 
 .scroll-step.active .screenshot--crafty-racer {
     background-image: url('assets/crafty-racer-screencast.gif');
-}
-
-/* preload crafty-racer-screencast.gif used on hover*/
-.screenshot--crafty-racer:before {
-    content: '';
-    background-image: url('assets/crafty-racer-screencast.gif');
-    width: 0;
-    height: 0;
-    visibility: hidden;
 }
 
 .project-details {
@@ -386,13 +363,16 @@ a:hover {
 }
 
 .project-details-item-label {
-    display: inline-block;
+    display: inline;
     font-weight: 800;
+    margin-right: 6px;
+    font-size: 18px;
 }
 
 .project-details-item-content {
-    display: inline-block;
+    display: inline;
     margin-top: 5px;
+    color: var(--content-text-colour);
 }
 
 .warning-message {
