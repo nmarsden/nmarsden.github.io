@@ -1,23 +1,48 @@
-import { FunctionalComponent, h } from 'preact';
-import { Route, Router } from 'preact-router';
+import { Component, h } from 'preact';
+type AppProps = {};
 
-import Home from '../routes/home';
-import Profile from '../routes/profile';
-import NotFoundPage from '../routes/notfound';
-import Header from './header';
+type AppState = {};
 
-const App: FunctionalComponent = () => {
+class App extends Component<AppProps, AppState> {
+
+  constructor(props: AppProps) {
+    super(props);
+  }
+
+  render(): JSX.Element {
     return (
-        <div id="preact_root">
-            <Header />
-            <Router>
-                <Route path="/" component={Home} />
-                <Route path="/profile/" component={Profile} user="me" />
-                <Route path="/profile/:user" component={Profile} />
-                <NotFoundPage default />
-            </Router>
+      <div>
+        <div className="background-container">
+          <div className="background-circle"/>
+          <div className="background-circle"/>
+          <div className="background-circle"/>
+          <div className="background-circle"/>
+          <div className="background-circle"/>
+          <div className="background-circle"/>
+          <div className="background-circle"/>
+          <div className="background-circle"/>
+          <div className="background-circle"/>
+          <div className="background-circle"/>
         </div>
+        <div className="main">
+          <div className="main-banner">
+            <div className="heading">Web Projects</div>
+            <div className="sub-heading">Crafted by Neil Marsden</div>
+          </div>
+          <div className="project-list">
+            <div className="project-card">Conway</div>
+            <div className="project-card screenshot--bf-viz">BF Viz</div>
+            <div className="project-card screenshot--purr-plex">Purr Plex</div>
+            <div className="project-card screenshot--fireworks">Fireworks</div>
+            <div className="project-card screenshot--crawly">Crawly</div>
+            <div className="project-card screenshot--togglefish">Togglefish</div>
+            <div className="project-card screenshot--make-em-green">Make 'em Green</div>
+            <div className="project-card screenshot--crafty-racer">Crafty Racer</div>
+          </div>
+        </div>
+      </div>
     );
-};
+  }
+}
 
 export default App;
