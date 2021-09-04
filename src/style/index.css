@@ -43,24 +43,6 @@ a:hover {
 	text-decoration: underline;
 }
 
-.background-container {
-	position: fixed;
-	left: -100%;
-	top: -100%;
-	right: -100%;
-	bottom: -100%;
-	display: flex;
-	z-index: -1;
-	perspective: 150px;
-	perspective-origin: 50% 50%;
-	transform-style: preserve-3d;
-
-	justify-content: center;
-	align-items: center;
-	transition: background-color 600ms;
-	background-color: rgb(var(--background-colour));
-}
-
 .viewing-page-1 { --background-colour: 12,  142, 226; } /* #0c8ee2: Main */
 .viewing-page-2 { --background-colour: 43,  0,   43;  } /* #2b002b: BF Viz */
 .viewing-page-3 { --background-colour: 11,  47,  109; } /* #0b2f6d: Purr Plex */
@@ -69,36 +51,6 @@ a:hover {
 .viewing-page-6 { --background-colour: 11,  47,  109; } /* #0b2f6d: Togglefish */
 .viewing-page-7 { --background-colour: 38,  107, 59;  } /* #266b3b: Make 'em green */
 .viewing-page-8 { --background-colour: 150, 39,  39   } /* #962727: Crafty Racer */
-
-.background-circle {
-	border-radius: 50%;
-	background-color: white;
-	opacity: 0;
-	width: 10vw;
-	height: 10vw;
-	animation: background-circle-move infinite 10s linear alternate-reverse;
-}
-
-.background-circle:nth-child(1) { animation-delay: -1s; animation-duration: 10s; }
-.background-circle:nth-child(2) { animation-delay: -2s; animation-duration: 17s; animation-name: background-circle-move-large; }
-.background-circle:nth-child(3) { animation-delay: -3s; animation-duration: 7s; }
-.background-circle:nth-child(4) { animation-delay: -4s; animation-duration: 9s; }
-.background-circle:nth-child(5) { animation-delay: -5s; animation-duration: 11s; }
-.background-circle:nth-child(6) { animation-delay: -6s; animation-duration: 15s; animation-name: background-circle-move-large; }
-.background-circle:nth-child(7) { animation-delay: -7s; animation-duration: 10s; }
-.background-circle:nth-child(8) { animation-delay: -8s; animation-duration: 16s; animation-name: background-circle-move-large; }
-.background-circle:nth-child(9) { animation-delay: -9s; animation-duration: 8s; }
-
-@keyframes background-circle-move {
-	0%   { transform: translateY(-50vh); opacity: 0; }
-	50%  { transform: translateY(0vh);   opacity: 0.1; }
-	100% { transform: translateY(50vh);  opacity: 0; }
-}
-@keyframes background-circle-move-large {
-	0%   { transform: scale(1.5) translateY(-45vh); opacity: 0; }
-	50%  { transform: scale(1.5) translateY(0vh);   opacity: 0.1; }
-	100% { transform: scale(1.5) translateY(45vh);  opacity: 0; }
-}
 
 .loader {
 	z-index: 1;
@@ -163,24 +115,6 @@ a:hover {
 	0%   { opacity: 0; }
 	70%  { opacity: 0.3; }
 	100% { opacity: 1;   }
-}
-
-.main-banner {
-	text-align: center;
-	background-color: rgba(128, 128, 128, 0.3);
-	padding: 20px 50px;
-}
-
-.heading {
-	font-size: 40px;
-	line-height: 40px;
-	color: var(--heading-colour);
-}
-
-.sub-heading {
-	margin-top: 20px;
-	font-size: 17px;
-	line-height: 17px;
 }
 
 .instructions-placeholder {
@@ -397,34 +331,3 @@ a:hover {
 	height: 100vh;
 }
 
-.project-list {
-	display: grid;
-	grid-template-columns: repeat(auto-fill, 160px);
-	grid-auto-rows: 160px;
-	grid-gap: 10px;
-	justify-content: center;
-	max-width: 830px;
-	margin: 0 auto;
-	padding-top: 20px;
-	padding-bottom: 30px;
-}
-
-.project-card {
-	border-radius: 30px;
-	text-align: center;
-	font-size: 18px;
-	padding-top: calc(160px - 34px);
-	background-size: contain;
-	background-repeat: no-repeat;
-	background-position: top;
-	background-color: rgba(0,0,0,0.2);
-	box-shadow: 5px 5px 5px 0 black;
-	background-blend-mode: luminosity;
-	opacity: 0.9;
-}
-
-.project-card:hover {
-	box-shadow: 8px 8px 5px 0 black;
-	background-blend-mode: unset;
-	opacity: 1;
-}

@@ -1,0 +1,17 @@
+.banner {
+	text-align: center;
+	background-color: rgba(128, 128, 128, 0.3);
+	padding: 20px 50px;
+}
+
+.heading {
+	font-size: 40px;
+	line-height: 40px;
+	color: var(--heading-colour);
+}
+
+.subHeading {
+	margin-top: 20px;
+	font-size: 17px;
+	line-height: 17px;
+}

@@ -1,0 +1,59 @@
+.projectList {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, 160px);
+	grid-auto-rows: 160px;
+	grid-gap: 10px;
+	justify-content: center;
+	max-width: 830px;
+	margin: 0 auto;
+	padding-top: 20px;
+	padding-bottom: 30px;
+}
+
+.projectCard {
+	border-radius: 30px;
+	text-align: center;
+	font-size: 18px;
+	padding-top: calc(160px - 34px);
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: top;
+	background-color: rgba(0,0,0,0.2);
+	box-shadow: 5px 5px 5px 0 black;
+	background-blend-mode: luminosity;
+	opacity: 0.9;
+}
+
+.projectCard:hover {
+	box-shadow: 8px 8px 5px 0 black;
+	background-blend-mode: unset;
+	opacity: 1;
+}
+
+.screenshot--purr-plex {
+	background-image: url('../../assets/purr-plex-screencast-frame.gif');
+}
+
+.screenshot--fireworks {
+	background-image: url('../../assets/fireworks-screencast-frame.gif');
+}
+
+.screenshot--crawly {
+	background-image: url('../../assets/crawly-screencast-frame.gif');
+}
+
+.screenshot--togglefish {
+	background-image: url('../../assets/togglefish-screencast-frame.gif');
+}
+
+.screenshot--make-em-green {
+	background-image: url('../../assets/make-em-green-screencast-frame.gif');
+}
+
+.screenshotBfViz {
+	background-image: url('../../assets/bf-viz-screencast-frame.gif');
+}
+
+.screenshot--crafty-racer {
+	background-image: url('../../assets/crafty-racer-screencast-frame.gif');
+}
