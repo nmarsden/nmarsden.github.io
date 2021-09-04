@@ -4,10 +4,10 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "build": "preact build",
+    "build": "preact build --no-sw --no-prerender",
     "serve": "sirv build --port 8080 --cors --single",
-    "dev": "preact watch",
-    "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'",
+    "dev": "preact watch --refresh",
+    "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}' 'tests/**/*.test.{ts,tsx}'",
     "test": "jest ./tests"
   },
   "eslintConfig": {
