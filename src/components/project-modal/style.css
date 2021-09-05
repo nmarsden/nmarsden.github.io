@@ -1,0 +1,91 @@
+.modal {
+    width: 100%;
+    background-color: rgb(0,154,255);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    opacity: 0;
+    transition: opacity;
+    transition-duration: 200ms;
+    transition-timing-function: ease-in;
+    z-index: -1;
+}
+
+.modal.isOpen {
+    opacity: 1;
+    z-index: 2;
+}
+
+.closeButton {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 52px;
+    height: 52px;
+    background-color: transparent;
+    background-image: url('../../assets/icons/close-icon.svg');
+    border: none;
+    cursor: pointer;
+}
+
+.header {
+    font-family: 'Crafty Girls', sans-serif;
+    width: 100%;
+    font-size: 26px;
+    font-weight: bold;
+    text-align: center;
+    background-color: rgb(39, 147, 217);
+    padding: 20px 0;
+}
+
+.bodyContainer {
+    overflow-y: auto;
+    height: 100%;
+}
+
+.body {
+    padding: 30px;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.screenshot {
+    --screenshot-width: min(calc(100vw - (30px * 2)), 400px);
+    width: var(--screenshot-width);
+    height: calc(var(--screenshot-width) * 0.75);
+    background-size: contain;
+}
+
+.subHeading {
+    padding-top: 15px;
+    padding-bottom: 5px;
+    font-weight: 400;
+    color: rgb(0, 0, 0);
+}
+
+.footer {
+    position: sticky;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    bottom: 0;
+    height: 62px;
+    width: 100%;
+    background-color: rgb(39, 147, 217);
+    font-size: 24px;
+}
+
+.projectLink {
+    width: 34px;
+    height: 34px;
+    background-image: url('../../assets/external-link.svg');
+    background-repeat: no-repeat;
+    background-size: 50px 50px;
+    background-position-x: -8px;
+    background-position-y: -8px;
+    margin: 10px;
+}

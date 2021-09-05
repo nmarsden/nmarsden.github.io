@@ -10,6 +10,10 @@
 	padding-bottom: 30px;
 }
 
+.projectList.isHidden {
+	display: none;
+}
+
 .projectCard {
 	border-radius: 30px;
 	text-align: center;
@@ -22,6 +26,7 @@
 	box-shadow: 5px 5px 5px 0 black;
 	background-blend-mode: luminosity;
 	opacity: 0.9;
+	cursor: pointer;
 }
 
 .projectCard:hover {

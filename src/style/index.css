@@ -21,13 +21,13 @@ html, body {
 :root {
 	--main-text-colour: white;
 	--heading-colour: #c7c7ff;
-	--link-colour: #00abff;
+	--link-colour: #200dd4;
 	--content-text-colour: #eeeeee;
 	--background-colour: 12, 142, 226; /* #0c8ee2; */
 }
 
 body {
-	font-family: 'Crafty Girls', sans-serif;
+	font-family: 'Helvetica Neue', arial, sans-serif;
 	font-size: 16px;
 	line-height: 22px;
 	color: var(--main-text-colour);
@@ -35,7 +35,6 @@ body {
 
 a,
 a:visited {
-	text-decoration: none;
 	color: var(--link-colour);
 }
 
