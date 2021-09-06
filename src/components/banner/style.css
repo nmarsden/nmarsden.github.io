@@ -1,18 +1,30 @@
+.bannerWrapper {
+	height: 120px;
+	position: sticky;
+	top: -50px; /* Equal to the height difference between banner-wrapper and banner */
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: rgb(62, 138, 198);
+	z-index: 1;
+}
+
 .banner {
+	height: 70px;
+	position: sticky;
+	top: 0;
 	font-family: 'Crafty Girls', sans-serif;
 	text-align: center;
-	background-color: rgba(128, 128, 128, 0.3);
-	padding: 20px 50px;
 }
 
 .heading {
-	font-size: 40px;
-	line-height: 40px;
+	font-size: 36px;
+	line-height: 36px;
 	color: var(--heading-colour);
 }
 
 .subHeading {
-	margin-top: 20px;
+	margin-top: 10px;
 	font-size: 17px;
 	line-height: 17px;
 }
