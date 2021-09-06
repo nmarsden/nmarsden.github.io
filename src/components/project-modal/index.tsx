@@ -11,6 +11,7 @@ type ProjectModalState = {};
 
 class ProjectModal extends Component<ProjectModalProps, ProjectModalState> {
 
+  // eslint-disable-next-line no-useless-constructor
   constructor(props: ProjectModalProps) {
     super(props);
   }
@@ -43,7 +44,7 @@ class ProjectModal extends Component<ProjectModalProps, ProjectModalState> {
         </div>
         <div className={style.footer}>
           <div>Launch</div>
-          <a className={style.projectLink} href={this.props.project?.url} target="_blank" />
+          <a className={style.projectLink} href={this.props.project?.url} target="_blank" rel="noreferrer" />
         </div>
         <button className={style.closeButton} onClick={this.closeButtonClicked} />
       </div>
