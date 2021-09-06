@@ -9,7 +9,7 @@
     "dev": "preact watch --refresh",
     "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}' 'tests/**/*.test.{ts,tsx}'",
     "test": "jest ./tests",
-    "predeploy": "npm run build",
+    "predeploy": "npm run build && cp CNAME ./build/CNAME",
     "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
