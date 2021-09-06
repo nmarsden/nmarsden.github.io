@@ -34,6 +34,7 @@ class ProjectModal extends Component<ProjectModalProps, ProjectModalState> {
         <div className={style.bodyContainer}>
           <div className={style.body}>
             <div className={style.screenshot} style={`background-image: url('${this.props.project?.screenshot}')`} />
+            {this.props.project?.mobileSupport ? '' : <div className={style.warning}>Works in desktop browsers only!</div>}
             <div className={style.subHeading}>Last Updated</div>
             <div>{this.props.project?.lastUpdated}</div>
             <div className={style.subHeading}>Description</div>

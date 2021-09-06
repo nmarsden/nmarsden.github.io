@@ -57,6 +57,16 @@
     width: var(--screenshot-width);
     height: calc(var(--screenshot-width) * 0.75);
     background-size: contain;
+    border-radius: 20px;
+}
+
+.warning {
+    background-color: rgba(167, 15, 15, 0.8);
+    padding: 5px;
+    margin-top: 20px;
+    border-radius: 10px;
+    text-align: center;
+    max-width: 400px;
 }
 
 .subHeading {
