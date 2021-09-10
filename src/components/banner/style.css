@@ -5,8 +5,9 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	background-color: rgb(62, 138, 198);
+	background-color: #008dca;
 	z-index: 1;
+	box-shadow: 0 5px 5px -5px #333;
 }
 
 .banner {
