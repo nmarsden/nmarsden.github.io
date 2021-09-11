@@ -1,0 +1,275 @@
+html, body {
+	height: 100%;
+	width: 100%;
+	padding: 0;
+	margin: 0;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+@font-face {
+	font-family: 'Crafty Girls';
+	font-style: normal;
+	font-weight: 400;
+	src: url(/b50a4ad2763ebb1a2c00b0cc4d81b69c.ttf) format('truetype');
+}
+
+:root {
+	--main-text-colour: white;
+	--heading-colour: black;
+	--link-colour: #200dd4;
+	--content-text-colour: #eeeeee;
+	--background-colour: #008fe3;
+	--background-colour2: #59bbf3;
+}
+
+body {
+	font-family: 'Helvetica Neue', arial, sans-serif;
+	font-size: 16px;
+	line-height: 22px;
+	color: var(--main-text-colour);
+}
+
+a,
+a:visited {
+	color: var(--link-colour);
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+.main {
+	height: 100vh;
+}
+
+
+.backgroundContainer__3dwaC {
+	position: fixed;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	display: -ms-flexbox;
+	display: flex;
+	z-index: -1;
+
+	-ms-flex-pack: center;
+
+	    justify-content: center;
+	-ms-flex-align: center;
+	    align-items: center;
+	background: linear-gradient(90deg, var(--background-colour) 0%, var(--background-colour2) 50%, var(--background-colour) 100%);
+}
+
+.backgroundCircle__2PpWu {
+	border-radius: 50%;
+	background-color: white;
+	opacity: 0;
+	width: 10vw;
+	height: 10vw;
+	animation: backgroundCircleMove__3ryaC infinite 10s linear alternate-reverse;
+}
+
+@-webkit-keyframes backgroundCircleMove__3ryaC {
+	0%   { -webkit-transform: translateY(-50vh); transform: translateY(-50vh); opacity: 0; }
+	50%  { -webkit-transform: translateY(0vh); transform: translateY(0vh);   opacity: 0.1; }
+	100% { -webkit-transform: translateY(50vh); transform: translateY(50vh);  opacity: 0; }
+}
+
+@keyframes backgroundCircleMove__3ryaC {
+	0%   { -webkit-transform: translateY(-50vh); transform: translateY(-50vh); opacity: 0; }
+	50%  { -webkit-transform: translateY(0vh); transform: translateY(0vh);   opacity: 0.1; }
+	100% { -webkit-transform: translateY(50vh); transform: translateY(50vh);  opacity: 0; }
+}
+@-webkit-keyframes backgroundCircleMoveLarge__1tOgJ {
+	0%   { -webkit-transform: scale(1.5) translateY(-45vh); transform: scale(1.5) translateY(-45vh); opacity: 0; }
+	50%  { -webkit-transform: scale(1.5) translateY(0vh); transform: scale(1.5) translateY(0vh);   opacity: 0.1; }
+	100% { -webkit-transform: scale(1.5) translateY(45vh); transform: scale(1.5) translateY(45vh);  opacity: 0; }
+}
+@keyframes backgroundCircleMoveLarge__1tOgJ {
+	0%   { -webkit-transform: scale(1.5) translateY(-45vh); transform: scale(1.5) translateY(-45vh); opacity: 0; }
+	50%  { -webkit-transform: scale(1.5) translateY(0vh); transform: scale(1.5) translateY(0vh);   opacity: 0.1; }
+	100% { -webkit-transform: scale(1.5) translateY(45vh); transform: scale(1.5) translateY(45vh);  opacity: 0; }
+}
+
+.bannerWrapper__AmhuC {
+	height: 120px;
+	position: sticky;
+	top: -50px; /* Equal to the height difference between banner-wrapper and banner */
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-align: center;
+	    align-items: center;
+	-ms-flex-pack: center;
+	    justify-content: center;
+	background-color: #008dca;
+	z-index: 1;
+	box-shadow: 0 5px 5px -5px #333;
+}
+
+.banner__y9Xfn {
+	height: 70px;
+	position: sticky;
+	top: 0;
+	font-family: 'Crafty Girls', sans-serif;
+	text-align: center;
+}
+
+.heading__2rK2p {
+	font-size: 36px;
+	line-height: 36px;
+	color: var(--heading-colour);
+}
+
+.subHeading__e-Diq {
+	margin-top: 10px;
+	font-size: 17px;
+	line-height: 17px;
+}
+
+.projectList__3-bgY {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, 160px);
+	grid-auto-rows: 160px;
+	grid-gap: 10px;
+	-ms-flex-pack: center;
+	    justify-content: center;
+	max-width: 830px;
+	margin: 0 auto;
+	padding-top: 20px;
+	padding-bottom: 30px;
+}
+
+.projectCard__3P67s {
+	border-radius: 30px;
+	text-align: center;
+	font-size: 18px;
+	padding-top: calc(160px - 34px);
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: top;
+	background-color: rgba(0,0,0,0.2);
+	box-shadow: 5px 5px 5px 0 black;
+	background-blend-mode: luminosity;
+	opacity: 0.9;
+	cursor: pointer;
+}
+
+.projectCard__3P67s:hover {
+	box-shadow: 8px 8px 5px 0 black;
+	background-blend-mode: unset;
+	opacity: 1;
+}
+
+.modal__2WFem {
+    width: 100%;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+        flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    opacity: 0;
+    transition: opacity;
+    transition-duration: 200ms;
+    transition-timing-function: ease-in;
+    z-index: -1;
+}
+
+.modal__2WFem.isOpen__24vXj {
+    opacity: 1;
+    z-index: 2;
+}
+
+.closeButton__2qix0 {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 52px;
+    height: 52px;
+    background-color: transparent;
+    background-image: url(/82d31a5e5a3747459f09b7c2e95e4397.svg);
+    border: none;
+    cursor: pointer;
+}
+
+.header__2M7VJ {
+    font-family: 'Crafty Girls', sans-serif;
+    width: 100%;
+    font-size: 26px;
+    font-weight: bold;
+    text-align: center;
+    background-color: #008dca;
+    padding: 20px 0;
+    box-shadow: 0 5px 5px -5px #333;
+}
+
+.bodyContainer__8XCCK {
+    overflow-y: auto;
+    height: 100%;
+}
+
+.body__lrdeI {
+    padding: 30px;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.screenshot__1078E {
+    --screenshot-width: min(calc(100vw - (30px * 2)), 400px);
+    width: var(--screenshot-width);
+    height: calc(var(--screenshot-width) * 0.75);
+    background-size: contain;
+    border-radius: 20px;
+}
+
+.warning__FZ-FN {
+    background-color: rgba(167, 15, 15, 0.8);
+    padding: 5px;
+    margin-top: 20px;
+    border-radius: 10px;
+    text-align: center;
+    max-width: 400px;
+}
+
+.subHeading__1f5aE {
+    padding-top: 15px;
+    padding-bottom: 5px;
+    font-weight: 400;
+    color: rgb(0, 0, 0);
+}
+
+.footer__3Qx-r {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+        align-items: center;
+    -ms-flex-pack: end;
+        justify-content: flex-end;
+    height: 62px;
+    width: 100%;
+    background-color: #008dca;
+    font-size: 24px;
+    box-shadow: 0 -5px 5px -5px #333;
+}
+
+.projectLink__1M6jd {
+    width: 34px;
+    height: 34px;
+    background-image: url(/84f7807960a91ed0a14ba9aa195f5f3a.svg);
+    background-repeat: no-repeat;
+    background-size: 50px 50px;
+    background-position-x: -8px;
+    background-position-y: -8px;
+    margin: 10px;
+}
+
+/*# sourceMappingURL=ssr-bundle.190df.css.map*/
