@@ -32,7 +32,7 @@ class ProjectList extends Component<ProjectListProps, ProjectListState> {
             <div
               key={index}
               className={style.projectCard}
-              style={`background-image: url('../../assets/screenshots/${project.name}.jpg')`}
+              style={`background-image: url('../../assets/screenshots/${project.name}-card.jpg')`}
               onClick={this.projectCardClickHandler(project)}>{project.displayName}
             </div>
           )}
