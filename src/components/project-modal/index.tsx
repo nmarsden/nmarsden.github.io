@@ -26,26 +26,32 @@ class ProjectModal extends Component<ProjectModalProps, ProjectModalState> {
   }
 
   render(): JSX.Element {
+    const project = this.props.project;
+    if (typeof project === 'undefined') {
+      return (
+        <div className={this.modalStyles()} />
+      );
+    }
     return (
       <div className={this.modalStyles()}>
         <div className={style.header}>
-          <div>{this.props.project?.name}</div>
+          <div>{project.displayName}</div>
         </div>
         <div className={style.bodyContainer}>
           <div className={style.body}>
-            <div className={style.screenshot} style={`background-image: url('${this.props.project?.screenshot}')`} />
-            {this.props.project?.mobileSupport ? '' : <div className={style.warning}>Works in desktop browsers only!</div>}
+            <div className={style.screenshot} style={`background-image: url('../../assets/screenshots/${project.name}.jpg')`} />
+            {project.mobileSupport ? '' : <div className={style.warning}>Works in desktop browsers only!</div>}
             <div className={style.subHeading}>Last Updated</div>
-            <div>{this.props.project?.lastUpdated}</div>
+            <div>{project.lastUpdated}</div>
             <div className={style.subHeading}>Description</div>
-            <div>{this.props.project?.description}</div>
+            <div>{project.description}</div>
             <div className={style.subHeading}>Tech</div>
-            <div>{this.props.project?.tech}</div>
+            <div>{project.tech}</div>
           </div>
         </div>
         <div className={style.footer}>
           <div>Launch</div>
-          <a className={style.projectLink} href={this.props.project?.url} target="_blank" rel="noreferrer" />
+          <a className={style.projectLink} href={`https://nmarsden.com/${project.name}`} target="_blank" rel="noreferrer" />
         </div>
         <button className={style.closeButton} onClick={this.closeButtonClicked} />
       </div>

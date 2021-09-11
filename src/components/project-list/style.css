@@ -30,31 +30,3 @@
 	background-blend-mode: unset;
 	opacity: 1;
 }
-
-.screenshot--purr-plex {
-	background-image: url('../../assets/purr-plex-screencast-frame.gif');
-}
-
-.screenshot--fireworks {
-	background-image: url('../../assets/fireworks-screencast-frame.gif');
-}
-
-.screenshot--crawly {
-	background-image: url('../../assets/crawly-screencast-frame.gif');
-}
-
-.screenshot--togglefish {
-	background-image: url('../../assets/togglefish-screencast-frame.gif');
-}
-
-.screenshot--make-em-green {
-	background-image: url('../../assets/make-em-green-screencast-frame.gif');
-}
-
-.screenshotBfViz {
-	background-image: url('../../assets/bf-viz-screencast-frame.gif');
-}
-
-.screenshot--crafty-racer {
-	background-image: url('../../assets/crafty-racer-screencast-frame.gif');
-}

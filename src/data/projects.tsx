@@ -2,19 +2,17 @@ import { h } from "preact";
 
 export type Project = {
   name: string;
-  screenshot: string;
-  url: string;
+  displayName: string;
   lastUpdated: string;
   mobileSupport: boolean;
   description: JSX.Element;
   tech: JSX.Element;
-}
+};
 
 const PROJECTS: Project[] = [
   {
-    name: 'Conway',
-    screenshot: '../../assets/conway-screenshot.jpg',
-    url: 'https://nmarsden.com/conway',
+    name: 'conway',
+    displayName: 'Conway',
     lastUpdated: 'July 2021',
     mobileSupport: true,
     description: <div>The <a href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life">Game of Life</a> is not a game
@@ -32,9 +30,8 @@ const PROJECTS: Project[] = [
       href="https://storybook.js.org/">Storybook</a>.</div>
   },
   {
-    name: 'Crafty Racer',
-    screenshot: '../../assets/crafty-racer-screencast-frame.gif',
-    url: 'https://nmarsden.com/crafty-racer',
+    name: 'crafty-racer',
+    displayName: 'Crafty Racer',
     lastUpdated: 'October 2020',
     mobileSupport: true,
     description: <div>An isometric car racer where the goal is to reach the 10
@@ -48,9 +45,8 @@ const PROJECTS: Project[] = [
       href="https://www.freesound.org">Freesound</a>.</div>
   },
   {
-    name: 'BF Viz',
-    screenshot: '../../assets/bf-viz-screenshot.jpg',
-    url: 'https://nmarsden.com/bf-viz',
+    name: 'bf-viz',
+    displayName: 'BF Viz',
     lastUpdated: 'September 2020',
     mobileSupport: true,
     description: <div>This is a 3D environment which visualizes a <a
@@ -65,9 +61,8 @@ const PROJECTS: Project[] = [
       href="https://github.com/dataarts/dat.gui">dat.GUI</a>.</div>
   },
   {
-    name: 'Purr Plex',
-    screenshot: '../../assets/purr-plex-screenshot.jpg',
-    url: 'https://nmarsden.com/purr-plex',
+    name: 'purr-plex',
+    displayName: 'Purr Plex',
     lastUpdated: 'February 2020',
     mobileSupport: true,
     description: <div>A <a
@@ -84,9 +79,8 @@ const PROJECTS: Project[] = [
       href="https://storybook.js.org/">Storybook</a>.</div>
   },
   {
-    name: 'Fireworks',
-    screenshot: '../../assets/fireworks-screenshot.jpg',
-    url: 'https://nmarsden.com/fireworks',
+    name: 'fireworks',
+    displayName: 'Fireworks',
     lastUpdated: 'January 2020',
     mobileSupport: true,
     description: <div>A 'pass and play' version of the cooperative card game
@@ -101,9 +95,8 @@ const PROJECTS: Project[] = [
       href="https://storybook.js.org/">Storybook</a>.</div>
   },
   {
-    name: 'Crawly',
-    screenshot: '../../assets/crawly-screenshot.jpg',
-    url: 'https://nmarsden.com/crawly',
+    name: 'crawly',
+    displayName: 'Crawly',
     lastUpdated: 'February 2019',
     mobileSupport: false,
     description: <div>A 'snake' like game with a twist. Complete a level by
@@ -114,9 +107,8 @@ const PROJECTS: Project[] = [
       href="https://unity.com/">Unity</a>.</div>
   },
   {
-    name: 'Togglefish',
-    screenshot: '../../assets/togglefish-screencast-frame.gif',
-    url: 'https://nmarsden.com/togglefish',
+    name: 'togglefish',
+    displayName: 'Togglefish',
     lastUpdated: 'June 2017',
     mobileSupport: true,
     description: <div>Togglefish is an experiment in building an animated scene
@@ -128,9 +120,8 @@ const PROJECTS: Project[] = [
       href="https://developer.mozilla.org/en-US/docs/Web/CSS">CSS</a>.</div>
   },
   {
-    name: 'Make \'em Green',
-    screenshot: '../../assets/make-em-green-screencast-frame.gif',
-    url: 'https://nmarsden.com/make-em-green',
+    name: 'make-em-green',
+    displayName: 'Make \'em Green',
     lastUpdated: 'January 2017',
     mobileSupport: true,
     description: <div>A <a

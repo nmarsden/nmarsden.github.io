@@ -15,7 +15,7 @@ html, body {
 	font-family: 'Crafty Girls';
 	font-style: normal;
 	font-weight: 400;
-	src: url('../assets/CraftyGirls-Regular.ttf') format('truetype');
+	src: url('../assets/fonts/CraftyGirls-Regular.ttf') format('truetype');
 }
 
 :root {

@@ -32,8 +32,8 @@ class ProjectList extends Component<ProjectListProps, ProjectListState> {
             <div
               key={index}
               className={style.projectCard}
-              style={`background-image: url('${project.screenshot}')`}
-              onClick={this.projectCardClickHandler(project)}>{project.name}
+              style={`background-image: url('../../assets/screenshots/${project.name}.jpg')`}
+              onClick={this.projectCardClickHandler(project)}>{project.displayName}
             </div>
           )}
         </div>
