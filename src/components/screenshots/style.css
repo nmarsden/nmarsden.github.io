@@ -1,0 +1,46 @@
+:root {
+    --screenshot-width: min(calc(100vw - (30px * 2)), 400px);
+}
+
+.container {
+    position: relative;
+    width: var(--screenshot-width);
+    height: calc(var(--screenshot-width) * 0.75);
+}
+
+.screenshot {
+    position: absolute;
+    width: var(--screenshot-width);
+    height: calc(var(--screenshot-width) * 0.75);
+    background-size: contain;
+    border-radius: 20px;
+    opacity: 0;
+    transition: opacity 200ms ease-in;
+}
+
+.screenshot.selected {
+    opacity: 1;
+}
+
+.navigation {
+    display: flex;
+    justify-content: center;
+    width: var(--screenshot-width);
+    padding: 10px 0;
+}
+
+.navItem {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: rgba(0,0,0,0.3);
+    cursor: pointer;
+}
+
+.navItem + .navItem {
+    margin-left: 10px;
+}
+
+.navItem.selected {
+    background-color: rgba(0,0,0,0.7);
+}

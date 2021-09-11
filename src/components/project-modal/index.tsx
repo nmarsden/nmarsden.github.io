@@ -1,6 +1,7 @@
 import { Component, h } from 'preact';
 import { Project } from "../../data/projects";
 import style from './style.css';
+import Screenshots from "../screenshots";
 
 export type ProjectModalProps = {
   project?: Project;
@@ -39,7 +40,7 @@ class ProjectModal extends Component<ProjectModalProps, ProjectModalState> {
         </div>
         <div className={style.bodyContainer}>
           <div className={style.body}>
-            <div className={style.screenshot} style={`background-image: url('../../assets/screenshots/${project.name}.jpg')`} />
+            <Screenshots project={project} />
             {project.mobileSupport ? '' : <div className={style.warning}>Works in desktop browsers only!</div>}
             <div className={style.subHeading}>Last Updated</div>
             <div>{project.lastUpdated}</div>

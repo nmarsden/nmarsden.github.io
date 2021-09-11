@@ -53,14 +53,6 @@
     margin: 0 auto;
 }
 
-.screenshot {
-    --screenshot-width: min(calc(100vw - (30px * 2)), 400px);
-    width: var(--screenshot-width);
-    height: calc(var(--screenshot-width) * 0.75);
-    background-size: contain;
-    border-radius: 20px;
-}
-
 .warning {
     background-color: rgba(167, 15, 15, 0.8);
     padding: 5px;

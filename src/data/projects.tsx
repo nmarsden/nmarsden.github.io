@@ -3,6 +3,7 @@ import { h } from "preact";
 export type Project = {
   name: string;
   displayName: string;
+  numScreenshots: number;
   lastUpdated: string;
   mobileSupport: boolean;
   description: JSX.Element;
@@ -13,6 +14,7 @@ const PROJECTS: Project[] = [
   {
     name: 'conway',
     displayName: 'Conway',
+    numScreenshots: 12,
     lastUpdated: 'July 2021',
     mobileSupport: true,
     description: <div>The <a href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life">Game of Life</a> is not a game
@@ -32,6 +34,7 @@ const PROJECTS: Project[] = [
   {
     name: 'crafty-racer',
     displayName: 'Crafty Racer',
+    numScreenshots: 1,
     lastUpdated: 'October 2020',
     mobileSupport: true,
     description: <div>An isometric car racer where the goal is to reach the 10
@@ -47,6 +50,7 @@ const PROJECTS: Project[] = [
   {
     name: 'bf-viz',
     displayName: 'BF Viz',
+    numScreenshots: 1,
     lastUpdated: 'September 2020',
     mobileSupport: true,
     description: <div>This is a 3D environment which visualizes a <a
@@ -63,6 +67,7 @@ const PROJECTS: Project[] = [
   {
     name: 'purr-plex',
     displayName: 'Purr Plex',
+    numScreenshots: 1,
     lastUpdated: 'February 2020',
     mobileSupport: true,
     description: <div>A <a
@@ -81,6 +86,7 @@ const PROJECTS: Project[] = [
   {
     name: 'fireworks',
     displayName: 'Fireworks',
+    numScreenshots: 1,
     lastUpdated: 'January 2020',
     mobileSupport: true,
     description: <div>A 'pass and play' version of the cooperative card game
@@ -97,6 +103,7 @@ const PROJECTS: Project[] = [
   {
     name: 'crawly',
     displayName: 'Crawly',
+    numScreenshots: 1,
     lastUpdated: 'February 2019',
     mobileSupport: false,
     description: <div>A 'snake' like game with a twist. Complete a level by
@@ -109,6 +116,7 @@ const PROJECTS: Project[] = [
   {
     name: 'togglefish',
     displayName: 'Togglefish',
+    numScreenshots: 1,
     lastUpdated: 'June 2017',
     mobileSupport: true,
     description: <div>Togglefish is an experiment in building an animated scene
@@ -122,6 +130,7 @@ const PROJECTS: Project[] = [
   {
     name: 'make-em-green',
     displayName: 'Make \'em Green',
+    numScreenshots: 1,
     lastUpdated: 'January 2017',
     mobileSupport: true,
     description: <div>A <a

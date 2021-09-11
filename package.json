@@ -13,7 +13,7 @@
     "deploy": "gh-pages -d build",
     "convert-screenshots": "npm run convert-screenshots:standard && npm run convert-screenshots:card",
     "convert-screenshots:standard": "sharp -i './screenshots/*.*' -f 'jpg' -o './src/assets/screenshots/{name}.jpg'",
-    "convert-screenshots:card": "sharp -i './screenshots/*.*' -f 'jpg' -o './src/assets/screenshots/{name}-card.jpg' resize 160 120"
+    "convert-screenshots:card": "sharp -i './screenshots/*-0.*' -f 'jpg' -o './src/assets/screenshots/{name}-card.jpg' resize 160 120"
   },
   "eslintConfig": {
     "parser": "@typescript-eslint/parser",
