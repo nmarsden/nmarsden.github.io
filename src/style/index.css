@@ -18,19 +18,24 @@ html, body {
 	src: url('../assets/fonts/CraftyGirls-Regular.ttf') format('truetype');
 }
 
+@font-face {
+	font-family: 'Permanent Marker';
+	font-style: normal;
+	font-weight: 400;
+	src: url('../assets/fonts/PermanentMarker-Regular.ttf') format('truetype');
+}
+
 :root {
-	--main-text-colour: white;
-	--heading-colour: black;
-	--link-colour: #200dd4;
-	--content-text-colour: #eeeeee;
+	--main-text-colour: #040337;
+	--link-colour: #000499;
 	--background-colour: #008fe3;
-	--background-colour2: #59bbf3;
+	--banner-background-colour: #008dca;
 }
 
 body {
 	font-family: 'Helvetica Neue', arial, sans-serif;
-	font-size: 16px;
-	line-height: 22px;
+	font-size: 22px;
+	line-height: 28px;
 	color: var(--main-text-colour);
 }
 

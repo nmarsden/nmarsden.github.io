@@ -13,6 +13,7 @@
 .projectCard {
 	border-radius: 30px;
 	text-align: center;
+	font-family: 'Permanent Marker', sans-serif;
 	font-size: 18px;
 	padding-top: calc(160px - 34px);
 	background-size: contain;
@@ -23,6 +24,7 @@
 	background-blend-mode: luminosity;
 	opacity: 0.9;
 	cursor: pointer;
+	color: white;
 }
 
 .projectCard:hover {

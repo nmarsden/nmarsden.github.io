@@ -5,7 +5,7 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	background-color: #008dca;
+	background-color: var(--banner-background-colour);
 	z-index: 1;
 	box-shadow: 0 5px 5px -5px #333;
 }
@@ -14,18 +14,19 @@
 	height: 70px;
 	position: sticky;
 	top: 0;
-	font-family: 'Crafty Girls', sans-serif;
 	text-align: center;
+	color: white;
 }
 
 .heading {
 	font-size: 36px;
 	line-height: 36px;
-	color: var(--heading-colour);
+	font-family: 'Permanent Marker', sans-serif;
 }
 
 .subHeading {
 	margin-top: 10px;
 	font-size: 17px;
 	line-height: 17px;
+	font-family: 'Crafty Girls', sans-serif;
 }
