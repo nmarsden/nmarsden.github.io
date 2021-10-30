@@ -196,6 +196,7 @@ a:hover {
 }
 
 .warning__FZ-FN {
+    color: white;
     background-color: rgba(167, 15, 15, 0.8);
     padding: 5px;
     margin-top: 20px;
@@ -289,4 +290,4 @@ a:hover {
     background-color: rgba(0,0,0,0.7);
 }
 
-/*# sourceMappingURL=ssr-bundle.d6428.css.map*/
+/*# sourceMappingURL=ssr-bundle.381f7.css.map*/
