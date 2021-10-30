@@ -5,6 +5,7 @@ html, body {
 	margin: 0;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+	overflow: hidden;
 }
 
 * {
@@ -49,6 +50,7 @@ a:hover {
 }
 
 .main {
-	height: 100vh;
+	height: 100%;
+	overflow-y: auto;
 }
 
