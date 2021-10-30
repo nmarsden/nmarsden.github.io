@@ -5,6 +5,7 @@ html, body {
 	margin: 0;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+	overflow: hidden;
 }
 
 * {
@@ -49,7 +50,8 @@ a:hover {
 }
 
 .main {
-	height: 100vh;
+	height: 100%;
+	overflow-y: auto;
 }
 
 
@@ -103,7 +105,7 @@ a:hover {
 	display: grid;
 	grid-template-columns: repeat(auto-fill, 160px);
 	grid-auto-rows: 160px;
-	grid-gap: 10px;
+	grid-gap: 40px;
 	-ms-flex-pack: center;
 	    justify-content: center;
 	max-width: 830px;
@@ -287,4 +289,4 @@ a:hover {
     background-color: rgba(0,0,0,0.7);
 }
 
-/*# sourceMappingURL=ssr-bundle.01cfc.css.map*/
+/*# sourceMappingURL=ssr-bundle.d6428.css.map*/
