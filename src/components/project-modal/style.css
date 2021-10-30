@@ -55,6 +55,7 @@
 }
 
 .warning {
+    color: white;
     background-color: rgba(167, 15, 15, 0.8);
     padding: 5px;
     margin-top: 20px;
