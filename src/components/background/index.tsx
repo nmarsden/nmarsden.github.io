@@ -14,10 +14,11 @@ const PARTICLE_MAX_SPEED = 3;
 const PARTICLE_MAX_SIZE = 40;
 const PARTICLES: Particle[] = [];
 const MAX_MOUSE_DISTANCE = 150;
+const MAX_MOUSE_IDLE_TIME_MSECS = 2000;
 
 let canvas: any;
 let ctx: any;
-const mouse: {  x?: number; y?: number } = { x: undefined, y: undefined };
+const mouse: { x: number; y: number; lastUpdatedMSecs: number; isIdle: boolean } = { x: 0, y: 0, lastUpdatedMSecs: 0, isIdle: true };
 
 class Particle {
     x: number;
@@ -64,13 +65,10 @@ class Particle {
         }
 
         // update hue & strokeStyle near mouse
-        let mouseDistance = 5000;
-        if (mouse.x && mouse.y) {
-            mouseDistance = Math.sqrt(
-              ((this.x - mouse.x) * (this.x - mouse.x)) +
-              ((this.y - mouse.y) * (this.y - mouse.y))
-            );
-        }
+        const mouseDistance = Math.sqrt(
+          ((this.x - mouse.x) * (this.x - mouse.x)) +
+          ((this.y - mouse.y) * (this.y - mouse.y))
+        );
         this.hue = (mouseDistance > MAX_MOUSE_DISTANCE) ? this.hue : 160;
         this.strokeStyle = (mouseDistance > MAX_MOUSE_DISTANCE) ? `rgba(255, 255, 255, 0.1)` : `rgba(255, 255, 255, 0.5)`;
     }
@@ -98,10 +96,14 @@ class Background extends Component<BackgroundProps, BackgroundState> {
         window.addEventListener('mousemove', (ev: MouseEvent) => {
             mouse.x = ev.pageX;
             mouse.y = ev.pageY;
+            mouse.isIdle = false;
+            mouse.lastUpdatedMSecs = Date.now();
         });
         window.addEventListener('touchmove', (ev: TouchEvent) => {
             mouse.x = ev.touches[0].pageX;
             mouse.y = ev.touches[0].pageY;
+            mouse.isIdle = false;
+            mouse.lastUpdatedMSecs = Date.now();
         });
 
         this.initParticles();
@@ -144,12 +146,20 @@ class Background extends Component<BackgroundProps, BackgroundState> {
         // connections
         this.connections();
 
-        // mouse circle
-        if (mouse.x && mouse.y) {
-            ctx.fillStyle = `rgba(255, 255, 255, 1)`;
-            ctx.beginPath();
-            ctx.arc(mouse.x, mouse.y, 10, 0, Math.PI * 2);
-            ctx.fill();
+        // draw mouse circle
+        ctx.fillStyle = `rgba(255, 255, 255, 1)`;
+        ctx.beginPath();
+        ctx.arc(mouse.x, mouse.y, 10, 0, Math.PI * 2);
+        ctx.fill();
+
+        // detect mouse becoming idle
+        if (!mouse.isIdle && (Date.now() - mouse.lastUpdatedMSecs) > MAX_MOUSE_IDLE_TIME_MSECS) {
+            mouse.isIdle = true;
+        }
+        // update idle mouse position
+        if (mouse.isIdle) {
+            mouse.x = (mouse.x + 0.5) % canvas.width;
+            mouse.y = (mouse.y + 0.5) % canvas.height;
         }
 
         this.rafId = window.requestAnimationFrame(this.animate);
@@ -160,28 +170,20 @@ class Background extends Component<BackgroundProps, BackgroundState> {
         const connectionDistance = Math.min(MAX_CONNECTION_DISTANCE, canvas.width / 4)
         for (let a = 0; a < PARTICLES.length; a++) {
             // mouse connection
-            if (mouse.x && mouse.y) {
-                const mouseDistance = Math.sqrt(
-                  ((PARTICLES[a].x - mouse.x) * (PARTICLES[a].x - mouse.x)) +
-                  ((PARTICLES[a].y - mouse.y) * (PARTICLES[a].y - mouse.y))
-                );
-                if (mouseDistance < MAX_MOUSE_DISTANCE) {
-                    ctx.strokeStyle = 'rgba(255,255,255,1)';
-                    ctx.beginPath();
-                    ctx.lineWidth = CONNECTION_LINE_WIDTH;
-                    ctx.moveTo(PARTICLES[a].x, PARTICLES[a].y);
-                    ctx.lineTo(mouse.x, mouse.y);
-                    ctx.stroke();
-                }
+            const mouseDistance = Math.sqrt(
+              ((PARTICLES[a].x - mouse.x) * (PARTICLES[a].x - mouse.x)) +
+              ((PARTICLES[a].y - mouse.y) * (PARTICLES[a].y - mouse.y))
+            );
+            if (mouseDistance < MAX_MOUSE_DISTANCE) {
+                ctx.strokeStyle = 'rgba(255,255,255,1)';
+                ctx.beginPath();
+                ctx.lineWidth = CONNECTION_LINE_WIDTH;
+                ctx.moveTo(PARTICLES[a].x, PARTICLES[a].y);
+                ctx.lineTo(mouse.x, mouse.y);
+                ctx.stroke();
             }
             // other particle connection
-            if (PARTICLES[a].opacity < PARTICLE_MAX_OPACITY) {
-                continue;
-            }
             for (let b = a; b < PARTICLES.length; b++) {
-                if (PARTICLES[b].opacity < PARTICLE_MAX_OPACITY) {
-                    continue;
-                }
                 const distance = Math.sqrt(
                   ((PARTICLES[a].x - PARTICLES[b].x) * (PARTICLES[a].x - PARTICLES[b].x)) +
                   ((PARTICLES[a].y - PARTICLES[b].y) * (PARTICLES[a].y - PARTICLES[b].y))
