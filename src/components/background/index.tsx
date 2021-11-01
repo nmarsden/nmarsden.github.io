@@ -167,12 +167,15 @@ class Particle {
         this.y += this.speedY * deltaTime;
         if (this.size > 0.2) {
             this.size -= PARTICLE_SHRINK_RATE * deltaTime;
+            this.size = Math.max(this.size, 0.2);
         }
         if (this.opacity < PARTICLE_MAX_OPACITY) {
             this.opacity += PARTICLE_OPACITY_RATE * deltaTime;
+            this.opacity = Math.min(this.opacity, PARTICLE_MAX_SIZE);
         }
         if (this.hue < 220) {
             this.hue += PARTICLE_HUE_RATE * deltaTime;
+            this.hue = Math.min(this.hue, 220);
         }
 
         // update hue & strokeStyle near enemy
