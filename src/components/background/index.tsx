@@ -1,4 +1,4 @@
-import { Component, h } from 'preact';
+import {Component, h} from 'preact';
 import style from './style.css';
 import * as Vector2D from "./vector2D";
 
@@ -18,8 +18,8 @@ const PARTICLE_MAX_SIZE = 40;
 const PARTICLES: Particle[] = [];
 const MAX_ENEMY_DISTANCE = 150;
 const MAX_MOUSE_IDLE_TIME_MSECS = 2000;
-const TARGET_MAX_SPEED = 0.125;
-const ENEMY_MAX_SPEED = 0.25;
+const MAX_TARGET_SPEED = 0.125;
+const MAX_ENEMY_SPEED = 0.18;
 
 let canvas: HTMLCanvasElement;
 let ctx: CanvasRenderingContext2D;
@@ -28,6 +28,8 @@ let target: Target;
 let enemy: Enemy;
 let lastAnimationTimestamp: DOMHighResTimeStamp = 1;
 let maxEnemyDistance: number = MAX_ENEMY_DISTANCE;
+let maxTargetSpeed: number = MAX_TARGET_SPEED;
+let maxEnemySpeed: number = MAX_ENEMY_SPEED;
 
 class Target {
     x: number;
@@ -42,8 +44,8 @@ class Target {
         this.halfSize = this.size / 2;
         this.x = this.size + (Math.random() * (canvas.width - this.size * 2));
         this.y = this.size + (Math.random() * (canvas.height - this.size * 2));
-        this.speedX = Math.random() > 0.5 ? TARGET_MAX_SPEED : -TARGET_MAX_SPEED;
-        this.speedY = Math.random() > 0.5 ? TARGET_MAX_SPEED : -TARGET_MAX_SPEED;
+        this.speedX = Math.random() > 0.5 ? maxTargetSpeed : -maxTargetSpeed;
+        this.speedY = Math.random() > 0.5 ? maxTargetSpeed : -maxTargetSpeed;
     }
 
     draw(): void {
@@ -65,8 +67,8 @@ class Target {
             // re-spawn
             this.x = this.size + (Math.random() * (canvas.width - this.size * 2));
             this.y = this.size + (Math.random() * (canvas.height - this.size * 2));
-            this.speedX = Math.random() > 0.5 ? TARGET_MAX_SPEED : -TARGET_MAX_SPEED;
-            this.speedY = Math.random() > 0.5 ? TARGET_MAX_SPEED : -TARGET_MAX_SPEED;
+            this.speedX = Math.random() > 0.5 ? maxTargetSpeed : -maxTargetSpeed;
+            this.speedY = Math.random() > 0.5 ? maxTargetSpeed : -maxTargetSpeed;
         } else {
             // move
             if (mouse.isIdle) {
@@ -110,7 +112,7 @@ class Enemy {
 
     _seek(target: Vector2D.Vector2D, deltaTime: number): void {
         let force = Vector2D.subtract(target, this.pos);
-        force = Vector2D.magnitude(ENEMY_MAX_SPEED * deltaTime, force);
+        force = Vector2D.magnitude(maxEnemySpeed * deltaTime, force);
         force = Vector2D.subtract(force, this.vel);
         force = Vector2D.limit(this.maxForce, force);
         this._applyForce(force);
@@ -123,7 +125,7 @@ class Enemy {
     update(deltaTime: number): void {
         this._seek({ x: target.x, y: target.y }, deltaTime);
         this.vel = Vector2D.add(this.vel, this.acc);
-        this.vel = Vector2D.limit(ENEMY_MAX_SPEED * deltaTime, this.vel);
+        this.vel = Vector2D.limit(maxEnemySpeed * deltaTime, this.vel);
         this.pos = Vector2D.add(this.pos, this.vel);
         this.acc = { x: 0, y: 0 };
     }
@@ -202,6 +204,7 @@ class Background extends Component<BackgroundProps, BackgroundState> {
             canvas.height = window.innerHeight;
             this.initParticles();
             this.initMaxEnemyDistance();
+            this.initMaxTargetAndEnemySpeeds();
         });
         window.addEventListener('mousemove', (ev: MouseEvent) => {
             mouse.x = ev.pageX;
@@ -218,6 +221,7 @@ class Background extends Component<BackgroundProps, BackgroundState> {
 
         this.initParticles();
         this.initMaxEnemyDistance();
+        this.initMaxTargetAndEnemySpeeds();
 
         target = new Target();
 
@@ -243,10 +247,14 @@ class Background extends Component<BackgroundProps, BackgroundState> {
     }
 
     initMaxEnemyDistance = (): void => {
-        const ENEMY_AREA_PERCENTAGE = 0.05;
         const area = canvas.width * canvas.height;
-        const rawEnemyDistance = Math.floor(Math.sqrt(area * ENEMY_AREA_PERCENTAGE) / 2)
-        maxEnemyDistance = Math.min(MAX_ENEMY_DISTANCE, rawEnemyDistance);
+        maxEnemyDistance = Math.min(MAX_ENEMY_DISTANCE, Math.floor(Math.sqrt(area * 0.05) / 2));
+    }
+
+    initMaxTargetAndEnemySpeeds = (): void => {
+        const area = canvas.width * canvas.height;
+        maxTargetSpeed = Math.min(MAX_TARGET_SPEED, Math.sqrt(area * 0.002) / 500);
+        maxEnemySpeed = Math.min(MAX_ENEMY_SPEED, Math.sqrt(area * 0.005) / 500);
     }
 
     animate = (timestamp: DOMHighResTimeStamp): void => {
