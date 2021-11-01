@@ -1,3 +1,10 @@
+:root {
+	--main-text-colour: #040337;
+	--link-colour: #000499;
+	--background-colour: #008fe3;
+	--banner-background-colour: #008dca;
+}
+
 html, body {
 	height: 100%;
 	width: 100%;
@@ -6,6 +13,10 @@ html, body {
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	overflow: hidden;
+}
+
+body {
+	background-color: var(--background-colour);
 }
 
 * {
@@ -24,13 +35,6 @@ html, body {
 	font-style: normal;
 	font-weight: 400;
 	src: url('../assets/fonts/PermanentMarker-Regular.ttf') format('truetype');
-}
-
-:root {
-	--main-text-colour: #040337;
-	--link-colour: #000499;
-	--background-colour: #008fe3;
-	--banner-background-colour: #008dca;
 }
 
 body {

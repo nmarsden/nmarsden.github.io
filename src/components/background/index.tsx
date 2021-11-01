@@ -5,30 +5,35 @@ import * as Vector2D from "./vector2D";
 type BackgroundProps = {};
 type BackgroundState = {};
 
-const MAX_NUMBER_OF_PARTICLES = 200;
+const MIN_NUMBER_OF_PARTICLES = 100;
+const MAX_NUMBER_OF_PARTICLES = 140;
 const MAX_CONNECTION_DISTANCE = 200;
 const CONNECTION_LINE_WIDTH = 2;
 const PARTICLE_MAX_OPACITY = 0.3;
-const PARTICLE_OPACITY_RATE = 0.005;
-const PARTICLE_SHRINK_RATE = 0.05;
-const PARTICLE_MAX_SPEED = 3;
+const PARTICLE_OPACITY_RATE = 0.0003;
+const PARTICLE_HUE_RATE = 0.06;
+const PARTICLE_SHRINK_RATE = 0.003;
+const PARTICLE_MAX_SPEED = 0.18;
 const PARTICLE_MAX_SIZE = 40;
 const PARTICLES: Particle[] = [];
 const MAX_ENEMY_DISTANCE = 150;
 const MAX_MOUSE_IDLE_TIME_MSECS = 2000;
+const TARGET_MAX_SPEED = 0.125;
+const ENEMY_MAX_SPEED = 0.25;
 
-let canvas: any;
-let ctx: any;
+let canvas: HTMLCanvasElement;
+let ctx: CanvasRenderingContext2D;
 const mouse: { x: number; y: number; lastUpdatedMSecs: number; isIdle: boolean } = { x: 0, y: 0, lastUpdatedMSecs: 0, isIdle: true };
 let target: Target;
 let enemy: Enemy;
+let lastAnimationTimestamp: DOMHighResTimeStamp = 1;
+let maxEnemyDistance: number = MAX_ENEMY_DISTANCE;
 
 class Target {
     x: number;
     y: number;
     size: number;
     halfSize: number;
-    maxSpeed: number;
     speedX: number;
     speedY: number;
 
@@ -37,22 +42,21 @@ class Target {
         this.halfSize = this.size / 2;
         this.x = this.size + (Math.random() * (canvas.width - this.size * 2));
         this.y = this.size + (Math.random() * (canvas.height - this.size * 2));
-        this.maxSpeed = 2;
-        this.speedX = Math.random() > 0.5 ? this.maxSpeed : -this.maxSpeed;
-        this.speedY = Math.random() > 0.5 ? this.maxSpeed : -this.maxSpeed;
+        this.speedX = Math.random() > 0.5 ? TARGET_MAX_SPEED : -TARGET_MAX_SPEED;
+        this.speedY = Math.random() > 0.5 ? TARGET_MAX_SPEED : -TARGET_MAX_SPEED;
     }
 
     draw(): void {
         ctx.fillStyle = 'hsla(220, 100%, 50%, 1)';
         ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)';
-        ctx.strokeWidth = 5;
+        ctx.lineWidth = 5;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fill();
         ctx.stroke();
     }
 
-    update(): void {
+    update(deltaTime: number): void {
         const enemyDistance = Math.sqrt(
           ((this.x - enemy.pos.x) * (this.x - enemy.pos.x)) +
           ((this.y - enemy.pos.y) * (this.y - enemy.pos.y))
@@ -61,13 +65,13 @@ class Target {
             // re-spawn
             this.x = this.size + (Math.random() * (canvas.width - this.size * 2));
             this.y = this.size + (Math.random() * (canvas.height - this.size * 2));
-            this.speedX = Math.random() > 0.5 ? this.maxSpeed : -this.maxSpeed;
-            this.speedY = Math.random() > 0.5 ? this.maxSpeed : -this.maxSpeed;
+            this.speedX = Math.random() > 0.5 ? TARGET_MAX_SPEED : -TARGET_MAX_SPEED;
+            this.speedY = Math.random() > 0.5 ? TARGET_MAX_SPEED : -TARGET_MAX_SPEED;
         } else {
             // move
             if (mouse.isIdle) {
-                this.x += this.speedX;
-                this.y += this.speedY;
+                this.x += this.speedX * deltaTime;
+                this.y += this.speedY * deltaTime;
             } else {
                 this.x = mouse.x;
                 this.y = mouse.y;
@@ -86,7 +90,6 @@ class Enemy {
     pos: Vector2D.Vector2D;
     vel: Vector2D.Vector2D;
     acc: Vector2D.Vector2D;
-    maxSpeed: number;
     maxForce: number;
     size: number;
 
@@ -94,8 +97,7 @@ class Enemy {
         this.pos = { x: Math.random() * canvas.width, y: Math.random() * canvas.height };
         this.vel = { x: 0, y: 0 };
         this.acc = { x: 0, y: 0 };
-        this.maxSpeed = 4;
-        this.maxForce = 0.25;
+        this.maxForce = 1;
         this.size = 10;
     }
 
@@ -106,9 +108,9 @@ class Enemy {
         ctx.fill();
     }
 
-    _seek(target: Vector2D.Vector2D): void {
+    _seek(target: Vector2D.Vector2D, deltaTime: number): void {
         let force = Vector2D.subtract(target, this.pos);
-        force = Vector2D.magnitude(this.maxSpeed, force);
+        force = Vector2D.magnitude(ENEMY_MAX_SPEED * deltaTime, force);
         force = Vector2D.subtract(force, this.vel);
         force = Vector2D.limit(this.maxForce, force);
         this._applyForce(force);
@@ -118,10 +120,10 @@ class Enemy {
         this.acc = Vector2D.add(this.acc, force);
     }
 
-    update(): void {
-        this._seek({ x: target.x, y: target.y });
+    update(deltaTime: number): void {
+        this._seek({ x: target.x, y: target.y }, deltaTime);
         this.vel = Vector2D.add(this.vel, this.acc);
-        this.vel = Vector2D.limit(this.maxSpeed, this.vel);
+        this.vel = Vector2D.limit(ENEMY_MAX_SPEED * deltaTime, this.vel);
         this.pos = Vector2D.add(this.pos, this.vel);
         this.acc = { x: 0, y: 0 };
     }
@@ -151,24 +153,24 @@ class Particle {
     draw(): void {
         ctx.fillStyle = `hsla(${this.hue}, 100%, 50%, ${this.opacity})`;
         ctx.strokeStyle = this.strokeStyle;
-        ctx.strokeWidth = 5;
+        ctx.lineWidth = 2;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fill();
         ctx.stroke();
     }
 
-    update(): void {
-        this.x += this.speedX;
-        this.y += this.speedY;
+    update(deltaTime: number): void {
+        this.x += this.speedX * deltaTime;
+        this.y += this.speedY * deltaTime;
         if (this.size > 0.2) {
-            this.size -= PARTICLE_SHRINK_RATE;
+            this.size -= PARTICLE_SHRINK_RATE * deltaTime;
         }
         if (this.opacity < PARTICLE_MAX_OPACITY) {
-            this.opacity += PARTICLE_OPACITY_RATE;
+            this.opacity += PARTICLE_OPACITY_RATE * deltaTime;
         }
         if (this.hue < 220) {
-            this.hue += 1;
+            this.hue += PARTICLE_HUE_RATE * deltaTime;
         }
 
         // update hue & strokeStyle near enemy
@@ -176,8 +178,8 @@ class Particle {
           ((this.x - enemy.pos.x) * (this.x - enemy.pos.x)) +
           ((this.y - enemy.pos.y) * (this.y - enemy.pos.y))
         );
-        this.hue = (enemyDistance > MAX_ENEMY_DISTANCE) ? this.hue : 160;
-        this.strokeStyle = (enemyDistance > MAX_ENEMY_DISTANCE) ? `rgba(255, 255, 255, 0.1)` : `rgba(255, 255, 255, 0.5)`;
+        this.hue = (enemyDistance > maxEnemyDistance) ? this.hue : 160;
+        this.strokeStyle = (enemyDistance > maxEnemyDistance) ? `rgba(255, 255, 255, 0.1)` : `rgba(255, 255, 255, 0.5)`;
     }
 }
 
@@ -190,15 +192,16 @@ class Background extends Component<BackgroundProps, BackgroundState> {
     }
 
     componentDidMount(): void {
-        canvas = document.getElementById('canvas1');
+        canvas = document.getElementById('canvas1') as HTMLCanvasElement;
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
-        ctx = canvas.getContext('2d');
+        ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
 
         window.addEventListener('resize', () => {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
             this.initParticles();
+            this.initMaxEnemyDistance();
         });
         window.addEventListener('mousemove', (ev: MouseEvent) => {
             mouse.x = ev.pageX;
@@ -214,6 +217,7 @@ class Background extends Component<BackgroundProps, BackgroundState> {
         });
 
         this.initParticles();
+        this.initMaxEnemyDistance();
 
         target = new Target();
 
@@ -228,19 +232,31 @@ class Background extends Component<BackgroundProps, BackgroundState> {
     }
 
     initParticles = (): void => {
-        const numParticles = Math.min(MAX_NUMBER_OF_PARTICLES, (canvas.width * canvas.height) / 2000);
+        const NUM_PARTICLES_PER_1000_PIXELS = 0.25;
+        const area = canvas.width * canvas.height;
+        const rawNumParticles = Math.floor((area / 1000) * NUM_PARTICLES_PER_1000_PIXELS);
+        const numParticles = Math.max(Math.min(MAX_NUMBER_OF_PARTICLES, rawNumParticles), MIN_NUMBER_OF_PARTICLES);
         PARTICLES.length = 0;
         for (let i=0; i<numParticles; i++) {
             PARTICLES.push(new Particle());
         }
     }
 
-    animate = (): void => {
+    initMaxEnemyDistance = (): void => {
+        const ENEMY_AREA_PERCENTAGE = 0.05;
+        const area = canvas.width * canvas.height;
+        const rawEnemyDistance = Math.floor(Math.sqrt(area * ENEMY_AREA_PERCENTAGE) / 2)
+        maxEnemyDistance = Math.min(MAX_ENEMY_DISTANCE, rawEnemyDistance);
+    }
+
+    animate = (timestamp: DOMHighResTimeStamp): void => {
+        const deltaTime = timestamp - lastAnimationTimestamp;
+
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         // particles
         for (let i=0; i<PARTICLES.length; i++) {
-            PARTICLES[i].update();
+            PARTICLES[i].update(deltaTime);
             PARTICLES[i].draw();
             if (
               PARTICLES[i].size < 0.3
@@ -258,11 +274,11 @@ class Background extends Component<BackgroundProps, BackgroundState> {
         this.connections();
 
         // target
-        target.update();
+        target.update(deltaTime);
         target.draw();
 
         // enemy
-        enemy.update();
+        enemy.update(deltaTime);
         enemy.draw();
 
         // detect mouse becoming idle
@@ -270,19 +286,20 @@ class Background extends Component<BackgroundProps, BackgroundState> {
             mouse.isIdle = true;
         }
 
+        lastAnimationTimestamp = timestamp;
         this.rafId = window.requestAnimationFrame(this.animate);
     }
 
     connections = (): void => {
         let opacityValue = 1;
-        const connectionDistance = Math.min(MAX_CONNECTION_DISTANCE, canvas.width / 4)
+        const connectionDistance = Math.min(MAX_CONNECTION_DISTANCE, canvas.width / 4);
         for (let a = 0; a < PARTICLES.length; a++) {
             // enemy connection
             const enemyDistance = Math.sqrt(
               ((PARTICLES[a].x - enemy.pos.x) * (PARTICLES[a].x - enemy.pos.x)) +
               ((PARTICLES[a].y - enemy.pos.y) * (PARTICLES[a].y - enemy.pos.y))
             );
-            if (enemyDistance < MAX_ENEMY_DISTANCE) {
+            if (enemyDistance < maxEnemyDistance) {
                 ctx.strokeStyle = 'rgba(255,255,255,1)';
                 ctx.beginPath();
                 ctx.lineWidth = CONNECTION_LINE_WIDTH;
