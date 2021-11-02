@@ -69,6 +69,7 @@ class Target {
             this.y = this.size + (Math.random() * (canvas.height - this.size * 2));
             this.speedX = Math.random() > 0.5 ? maxTargetSpeed : -maxTargetSpeed;
             this.speedY = Math.random() > 0.5 ? maxTargetSpeed : -maxTargetSpeed;
+            mouse.isIdle = true;
         } else {
             // move
             if (mouse.isIdle) {
