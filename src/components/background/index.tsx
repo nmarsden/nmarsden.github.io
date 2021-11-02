@@ -262,7 +262,8 @@ class Background extends Component<BackgroundProps, BackgroundState> {
     }
 
     animate = (timestamp: DOMHighResTimeStamp): void => {
-        const deltaTime = timestamp - lastAnimationTimestamp;
+        this.rafId = window.requestAnimationFrame(this.animate);
+        const deltaTime = Math.min(timestamp - lastAnimationTimestamp, 60);
 
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -299,7 +300,6 @@ class Background extends Component<BackgroundProps, BackgroundState> {
         }
 
         lastAnimationTimestamp = timestamp;
-        this.rafId = window.requestAnimationFrame(this.animate);
     }
 
     connections = (): void => {
