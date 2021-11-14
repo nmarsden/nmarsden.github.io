@@ -2,7 +2,9 @@ import {Component, h} from 'preact';
 import style from './style.css';
 import * as Vector2D from "./vector2D";
 
-type BackgroundProps = {};
+type BackgroundProps = {
+    isShown: boolean;
+};
 type BackgroundState = {};
 
 const MIN_NUMBER_OF_PARTICLES = 100;
@@ -190,7 +192,7 @@ class Particle {
 }
 
 class Background extends Component<BackgroundProps, BackgroundState> {
-    rafId: any;
+    rafId = 0;
 
     // eslint-disable-next-line no-useless-constructor
     constructor(props: BackgroundProps) {
@@ -199,29 +201,22 @@ class Background extends Component<BackgroundProps, BackgroundState> {
 
     componentDidMount(): void {
         canvas = document.getElementById('canvas1') as HTMLCanvasElement;
+        ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
+    }
+
+    componentDidUpdate(prevProps: Readonly<BackgroundProps>): void {
+        if (this.props.isShown !== prevProps.isShown) {
+            (this.props.isShown) ? this.show() : this.hide();
+        }
+    }
+
+    show = (): void => {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
-        ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
 
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            this.initParticles();
-            this.initMaxEnemyDistance();
-            this.initMaxTargetAndEnemySpeeds();
-        });
-        window.addEventListener('mousemove', (ev: MouseEvent) => {
-            mouse.x = ev.pageX;
-            mouse.y = ev.pageY;
-            mouse.isIdle = false;
-            mouse.lastUpdatedMSecs = Date.now();
-        });
-        window.addEventListener('touchmove', (ev: TouchEvent) => {
-            mouse.x = ev.touches[0].pageX;
-            mouse.y = ev.touches[0].pageY;
-            mouse.isIdle = false;
-            mouse.lastUpdatedMSecs = Date.now();
-        });
+        window.addEventListener('resize', this.resize);
+        window.addEventListener('mousemove', this.mousemove);
+        window.addEventListener('touchmove', this.touchmove);
 
         this.initParticles();
         this.initMaxEnemyDistance();
@@ -234,10 +229,36 @@ class Background extends Component<BackgroundProps, BackgroundState> {
         this.rafId = window.requestAnimationFrame(this.animate);
     }
 
-    componentWillUnmount(): void {
+    hide = (): void => {
+        window.removeEventListener('resize', this.resize);
+        window.removeEventListener('mousemove', this.mousemove);
+        window.removeEventListener('touchmove', this.touchmove);
+
         window.cancelAnimationFrame(this.rafId);
-        this.rafId = null;
+        this.rafId = 0;
     }
+
+    resize = (): void => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        this.initParticles();
+        this.initMaxEnemyDistance();
+        this.initMaxTargetAndEnemySpeeds();
+    };
+
+    mousemove = (ev: MouseEvent): void => {
+        mouse.x = ev.pageX;
+        mouse.y = ev.pageY;
+        mouse.isIdle = false;
+        mouse.lastUpdatedMSecs = Date.now();
+    };
+
+    touchmove = (ev: TouchEvent): void => {
+        mouse.x = ev.touches[0].pageX;
+        mouse.y = ev.touches[0].pageY;
+        mouse.isIdle = false;
+        mouse.lastUpdatedMSecs = Date.now();
+    };
 
     initParticles = (): void => {
         const NUM_PARTICLES_PER_1000_PIXELS = 0.25;
@@ -327,7 +348,7 @@ class Background extends Component<BackgroundProps, BackgroundState> {
                 );
                 if (distance < connectionDistance) {
                     opacityValue = (1 - (distance / connectionDistance)) * 0.7;
-                    ctx.strokeStyle = 'rgba(255,255,255,' + opacityValue + ')';
+                    ctx.strokeStyle = `rgba(255,255,255,${opacityValue})`;
                     ctx.beginPath();
                     ctx.lineWidth = CONNECTION_LINE_WIDTH;
                     ctx.moveTo(PARTICLES[a].x, PARTICLES[a].y);

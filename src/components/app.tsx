@@ -1,14 +1,13 @@
 import { Component, h } from 'preact';
-import Background from "./background";
-import Banner from "./banner";
-import ProjectList from "./project-list";
-import PROJECTS, {Project} from "../data/projects";
-import ProjectModal from "./project-modal";
+import Home from "./home";
+import { Loading } from './loading';
+import Projects from "./projects";
 
 type AppProps = {};
 
 type AppState = {
-  selectedProject?: Project;
+  isLoading: boolean;
+  isShowHomePage: boolean;
 };
 
 class App extends Component<AppProps, AppState> {
@@ -17,31 +16,29 @@ class App extends Component<AppProps, AppState> {
     super(props);
 
     this.state = {
-      selectedProject: undefined
+      isLoading: true,
+      isShowHomePage: true,
     }
+
+    document.fonts.ready.then(() => {
+      this.setState({ isLoading: false });
+    });
   }
 
-  onProjectSelected = (project: Project): void => {
-    this.setState({ selectedProject: project });
+  onEnterClicked = (): void => {
+    this.setState({ isShowHomePage: false });
   }
 
-  onProjectModalClosed = (): void => {
-    this.setState({ selectedProject: undefined });
+  onBannerClicked = (): void => {
+    this.setState({ isShowHomePage: true });
   }
 
   render(): JSX.Element {
     return (
       <div className="main">
-        <Background />
-        { !this.state.selectedProject ?
-          (
-            <div>
-              <Banner />
-              <ProjectList projects={PROJECTS} onProjectSelected={this.onProjectSelected} />
-            </div>
-          ) : ''
-        }
-        <ProjectModal project={this.state.selectedProject} onClosed={this.onProjectModalClosed} />
+        <Loading isShown={this.state.isLoading} />
+        <Home isShown={!this.state.isLoading && this.state.isShowHomePage} onEnterClicked={this.onEnterClicked} />
+        <Projects isShown={!this.state.isLoading && !this.state.isShowHomePage} onBannerClicked={this.onBannerClicked} />
       </div>
     );
   }

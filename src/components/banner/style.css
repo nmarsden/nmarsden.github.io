@@ -8,6 +8,8 @@
 	background-color: var(--banner-background-colour);
 	z-index: 1;
 	box-shadow: 0 5px 5px -5px #333;
+	cursor: pointer;
+	user-select: none;
 }
 
 .banner {

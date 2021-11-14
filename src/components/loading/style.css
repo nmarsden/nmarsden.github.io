@@ -1,0 +1,84 @@
+.loading {
+	position: fixed;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	background-color: var(--background-colour);
+	opacity: 1;
+	transition: opacity 1200ms;
+	z-index: 3;
+	font-size: 30px;
+	line-height: 38px;
+	font-weight: bold;
+	text-align: center;
+}
+
+.loading--hide{
+	opacity: 0;
+	pointer-events: none;
+}
+
+.loading-spinner {
+	margin-top: 20px;
+	height: 60px;
+	width: 60px;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.loading-spinner-cube {
+	width: 33%;
+	height: 33%;
+	background-color: white;
+	animation: loadingSpinnerCubeAnimation 1.3s infinite ease-in-out;
+}
+
+.loading-spinner-cube--1 {
+	animation-delay: 0s;
+}
+
+.loading-spinner-cube--2 {
+	animation-delay: 0.1s;
+}
+
+.loading-spinner-cube--3 {
+	animation-delay: 0.2s;
+}
+
+.loading-spinner-cube--4 {
+	animation-delay: 0.1s;
+}
+
+.loading-spinner-cube--5 {
+	animation-delay: 0.2s;
+}
+
+.loading-spinner-cube--6 {
+	animation-delay: 0.3s;
+}
+
+.loading-spinner-cube--7 {
+	animation-delay: 0.2s;
+}
+
+.loading-spinner-cube--8 {
+	animation-delay: 0.3s;
+}
+
+.loading-spinner-cube--9 {
+	animation-delay: 0.4s;
+}
+
+@keyframes loadingSpinnerCubeAnimation {
+	0%, 70%, 100% {
+		transform: scale3D(1, 1, 1);
+	}
+	35% {
+		transform: scale3D(0, 0, 1);
+	}
+}

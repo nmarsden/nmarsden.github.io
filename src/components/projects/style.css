@@ -1,0 +1,10 @@
+.projectsContainer {
+	opacity: 0;
+	transition: opacity 300ms linear;
+	z-index: 0;
+}
+
+.projectsContainer.isShown {
+	opacity: 1;
+	z-index: 2;
+}
