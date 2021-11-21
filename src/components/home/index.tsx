@@ -9,16 +9,14 @@ type HomeProps = {
 
 type HomeState = {};
 
-type Mouse = { x: number; y: number; lastUpdatedMSecs: number; isIdle: boolean; radius: number; radiusDiff: number; maxRadius: number };
-
 const PARTICLES: Particle[] = [];
 const MAX_MOUSE_IDLE_TIME_MSECS = 2000;
+const MOUSE_ANIMATION_DURATION = 1000 * 25; // 25 Seconds
 
 let canvas: HTMLCanvasElement;
 let ctx: CanvasRenderingContext2D;
-const mouse: Mouse = { x: 0, y: 0, lastUpdatedMSecs: 0, isIdle: false, radius: 1, radiusDiff: 0.25, maxRadius: 1 };
+let mouse: Mouse;
 let lastAnimationTimestamp: DOMHighResTimeStamp = 1;
-let particleOpacity = 0.5;
 let particleSize = 1;
 
 let webOffset: Point = { x: 0, y: 0 };
@@ -36,6 +34,97 @@ const craftedByText = 'Crafted by Neil Marsden';
 
 type Point = { x: number; y: number };
 type Bounds = { min: Point; max: Point };
+type MouseAnimation = 'NONE' | 'FIGURE_EIGHT' | 'HORIZONTAL' | 'VERTICAL';
+type AnimationFn = (timestamp: number) => void;
+
+const mouseAnimations: Map<MouseAnimation, AnimationFn> = new Map([
+  ['NONE', (): void => { /* no op */ }],
+  ['FIGURE_EIGHT', (timestamp: number): void => {
+      mouse.x = (canvas.width / 2) + ((projectsWidth / 2) * Math.sin(timestamp * 0.0005));
+      mouse.y = projectsOffset.y - (verticalSpace/2) + (projectsHeight * Math.sin(timestamp * 0.0005 * 2));
+  }],
+  ['HORIZONTAL', (timestamp: number): void => {
+      mouse.x = (canvas.width / 2) + (projectsWidth * 1.2 * Math.cos((mouse.animationStartTime - timestamp) * 0.0005));
+  }],
+  ['VERTICAL', (timestamp: number): void => {
+      mouse.y = projectsOffset.y - (verticalSpace/2) + (projectsHeight * 10 * Math.cos((mouse.animationStartTime - timestamp) * 0.0005 * 0.5));
+  }]
+]);
+
+class Mouse {
+    x: number;
+    y: number;
+    lastUpdatedMSecs: number;
+    isIdle: boolean;
+    radius: number;
+    radiusDiff: number;
+    maxRadius: number;
+    animation: MouseAnimation;
+    animationStartTime: number;
+
+    constructor() {
+        this.x = 0;
+        this.y = 0;
+        this.lastUpdatedMSecs = 0;
+        this.isIdle = false;
+        this.radius = 1;
+        this.radiusDiff = 0.25;
+        this.maxRadius = projectsWidth / 8;
+        this.animation = 'NONE';
+        this.animationStartTime = 0;
+    }
+
+    animate(timestamp: number) {
+        // detect mouse becoming idle
+        if (!mouse.isIdle && (Date.now() - this.lastUpdatedMSecs) > MAX_MOUSE_IDLE_TIME_MSECS) {
+            this.isIdle = true;
+
+            // FIGURE_EIGHT
+            this.x = canvas.width / 2;
+            this.y = projectsOffset.y;
+            this.radius = projectsWidth / 8;
+            this.animation = 'FIGURE_EIGHT';
+            this.animationStartTime = timestamp;
+        }
+
+        if (mouse.isIdle) {
+            (mouseAnimations.get(this.animation) as AnimationFn)(timestamp);
+
+            // grow/shrink radius
+            // const speedFactor = Math.min(4, 0.01 + 4 * (mouse.radius / mouse.maxRadius));
+            // mouse.radius = mouse.radius + mouse.radiusDiff * deltaTime * 0.5 * speedFactor;
+            // if (mouse.radius < 1) {
+            //     mouse.radius = 1;
+            //     mouse.radiusDiff = -mouse.radiusDiff;
+            // }
+            // if (mouse.radius > mouse.maxRadius) {
+            //     mouse.radius = mouse.maxRadius;
+            //     mouse.radiusDiff = -mouse.radiusDiff;
+            // }
+        }
+
+        // change animation after certain time
+        if (this.animation === 'FIGURE_EIGHT' && timestamp - this.animationStartTime > MOUSE_ANIMATION_DURATION) {
+            this.x = 0;
+            this.y = projectsOffset.y - (verticalSpace / 2);
+            this.radius = projectsHeight;
+            this.animation = 'HORIZONTAL';
+            this.animationStartTime = timestamp;
+        } else if (this.animation === 'HORIZONTAL' && timestamp - this.animationStartTime > MOUSE_ANIMATION_DURATION) {
+            // position below PROJECTS text
+            this.y = projectsOffset.y - (verticalSpace / 2);
+            this.radius = projectsWidth / 2;
+            this.animation = 'VERTICAL';
+            this.animationStartTime = timestamp;
+        } else if (this.animation === 'VERTICAL' && timestamp - this.animationStartTime > MOUSE_ANIMATION_DURATION) {
+            this.x = canvas.width / 2;
+            this.y = projectsOffset.y;
+            this.radius = projectsWidth / 8;
+            this.animation = 'FIGURE_EIGHT';
+            this.animationStartTime = timestamp;
+        }
+    }
+}
 
 class Particle {
     x: number;
@@ -44,6 +133,7 @@ class Particle {
     density: number;
     baseX: number;
     baseY: number;
+    opacity: number;
 
     constructor(point: Point) {
         this.x = point.x;
@@ -51,12 +141,12 @@ class Particle {
         this.baseX = point.x;
         this.baseY = point.y;
         this.size = particleSize;
-        this.density = Math.random() * 250 + 50;
+        this.density = 50;
+        this.opacity = 1;
     }
 
     draw(): void {
-        // ctx.fillStyle = `rgba(0, 0, 0, ${particleOpacity})`;
-        ctx.fillStyle = `rgba(255, 255, 255, ${particleOpacity})`;
+        ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fill();
@@ -71,7 +161,6 @@ class Particle {
         const forceDirY = dy / distance;
 
         const maxDistance = mouse.radius;
-        // const maxDistance = 130;
 
         const force = (maxDistance - distance) / maxDistance;
         const dirX = forceDirX * force * this.density;
@@ -80,27 +169,23 @@ class Particle {
         if (distance < maxDistance) {
             this.x -= dirX * deltaTime * timeFactor;
             this.y -= dirY * deltaTime * timeFactor;
-
-            // this.x -= dirX;
-            // this.y -= dirY;
         } else {
             if (this.x !== this.baseX) {
                 const dx = this.x - this.baseX;
                 this.x -= dx/10 * deltaTime * timeFactor;
-                // this.x -= dx/10;
             }
             if (this.y !== this.baseY) {
                 const dy = this.y - this.baseY;
                 this.y -= dy/10 * deltaTime * timeFactor;
-                // this.y -= dy/10;
             }
         }
 
-        // adjust particle size
-        const baseDx = this.baseX - this.x;
-        const baseDy = this.baseY - this.y;
-        const baseDistance = Math.sqrt(baseDx * baseDx + baseDy * baseDy);
-        this.size = particleSize + (baseDistance * 0.01);
+        // adjust particle size & opacity
+        // const baseDx = this.baseX - this.x;
+        // const baseDy = this.baseY - this.y;
+        // const baseDistance = Math.sqrt(baseDx * baseDx + baseDy * baseDy);
+        // this.size = particleSize + (baseDistance * 0.1);
+        // this.opacity = Math.min(0.9, Math.max(0.2, 1 - (baseDistance * 10 / maxDistance)));
     }
 }
 
@@ -115,6 +200,7 @@ class Home extends Component<HomeProps, HomeState> {
     componentDidMount(): void {
         canvas = document.getElementById('homeCanvas') as HTMLCanvasElement;
         ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
+        mouse = new Mouse();
     }
 
     componentDidUpdate(prevProps: Readonly<HomeProps>): void {
@@ -167,8 +253,6 @@ class Home extends Component<HomeProps, HomeState> {
 
     initParticles = (): void => {
         PARTICLES.length = 0;
-
-        particleOpacity = 1;
 
         particleSize = 0.5 * Math.max(1, Math.min(2, canvas.width / 600));
 
@@ -260,16 +344,12 @@ class Home extends Component<HomeProps, HomeState> {
         ctx.textBaseline = "top";
         ctx.fillStyle = "rgba(255, 255, 255, 0.2)";
         ctx.fillText('WEB', (webOffset.x + (webHeight * 0.02)), webOffset.y - (webHeight * 0.25));
-        // ctx.lineWidth = 10;
-        // ctx.strokeText('WEB', (webOffset.x + (webHeight * 0.02)), webOffset.y - (webHeight * 0.25));
 
         // PROJECTS text
         ctx.font = `${projectsHeight * 1.3}px "Permanent Marker"`;
         ctx.textBaseline = "top";
         ctx.fillStyle = "rgba(255, 255, 255, 0.2)";
         ctx.fillText('PROJECTS', (projectsOffset.x - (projectsHeight * 0.1)), projectsOffset.y - (projectsHeight * 0.25));
-        // ctx.lineWidth = 10;
-        // ctx.strokeText('PROJECTS', (projectsOffset.x - (projectsHeight * 0.1)), projectsOffset.y - (projectsHeight * 0.25));
 
         // particles
         for (let i = 0; i < PARTICLES.length; i++) {
@@ -286,38 +366,7 @@ class Home extends Component<HomeProps, HomeState> {
         ctx.fillStyle = "white";
         ctx.fillText(craftedByText, craftedByTextPosition.x, craftedByTextPosition.y, craftedByTextWidth);
 
-        // detect mouse becoming idle
-        if (!mouse.isIdle && (Date.now() - mouse.lastUpdatedMSecs) > MAX_MOUSE_IDLE_TIME_MSECS) {
-            mouse.isIdle = true;
-            mouse.radius = projectsWidth / 8;
-            // mouse.radius = 1;
-            mouse.maxRadius = projectsWidth * 2;
-            // position below PROJECTS text
-            mouse.x = canvas.width / 2;
-            mouse.y = projectsOffset.y;
-        }
-
-        // update mouse radius
-        if (mouse.isIdle) {
-            // TODO auto-switch between multiple mouse idle behaviours, eg.  figure-eight, left-to-right, up-to-down, down-to-up
-            // move mouse in figure eight
-            mouse.x = (canvas.width / 2) + ((projectsWidth / 2) * Math.sin(timestamp * 0.0005));
-            mouse.y = projectsOffset.y - (verticalSpace/2) + (projectsHeight * Math.sin(timestamp * 0.0005 * 2));
-
-            // grow/shrink radius
-            // const speedFactor = Math.min(4, 0.01 + 4 * (mouse.radius / mouse.maxRadius));
-            // mouse.radius = mouse.radius + mouse.radiusDiff * deltaTime * 0.5 * speedFactor;
-            // if (mouse.radius < 1) {
-            //     mouse.radius = 1;
-            //     mouse.radiusDiff = -mouse.radiusDiff;
-            // }
-            // if (mouse.radius > mouse.maxRadius) {
-            //     mouse.radius = mouse.maxRadius;
-            //     mouse.radiusDiff = -mouse.radiusDiff;
-            // }
-        } else {
-            mouse.radius = projectsWidth / 8;
-        }
+        mouse.animate(timestamp);
 
         // draw mouse position
         // ctx.fillStyle = `rgba(255, 255, 255, 0.5)`;
