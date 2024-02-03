@@ -1,8 +1,8 @@
 .projectList {
 	display: grid;
-	grid-template-columns: repeat(auto-fill, 160px);
+	grid-template-columns: repeat(auto-fill, 320px);
 	grid-auto-rows: 160px;
-	grid-gap: 40px;
+	grid-gap: 20px;
 	justify-content: center;
 	max-width: 830px;
 	margin: 0 auto;
@@ -11,24 +11,34 @@
 }
 
 .projectCard {
-	border-radius: 30px;
-	text-align: center;
-	font-family: 'Permanent Marker', sans-serif;
-	font-size: 18px;
-	padding-top: calc(160px - 34px);
-	background-size: contain;
+	border-radius: 10px;
+	background-size: cover;
 	background-repeat: no-repeat;
 	background-position: top;
-	background-color: rgba(0,0,0,0.2);
-	box-shadow: 5px 5px 5px 0 black;
-	background-blend-mode: luminosity;
-	opacity: 0.9;
+	border: 3px solid black;
 	cursor: pointer;
+	text-decoration: none;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: all 300ms;
+}
+
+.projectCard:visited {
 	color: white;
 }
 
 .projectCard:hover {
-	box-shadow: 8px 8px 5px 0 black;
-	background-blend-mode: unset;
-	opacity: 1;
+	text-decoration: none;
+	scale: 1.1;
+}
+
+.projectCardText {
+	text-align: center;
+	font-family: 'Roboto', sans-serif;
+	font-size: 60px;
+	font-weight: bolder;
+	line-height: 60px;
+	color: white;
+	text-shadow: 0 0 27px rgba(0,0,0,0.6);
 }

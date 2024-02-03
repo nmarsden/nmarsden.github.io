@@ -17,7 +17,7 @@ class App extends Component<AppProps, AppState> {
 
     this.state = {
       isLoading: true,
-      isShowHomePage: true,
+      isShowHomePage: false,
     }
 
     document.fonts.ready.then(() => {
@@ -37,7 +37,6 @@ class App extends Component<AppProps, AppState> {
     return (
       <div className="main">
         <Loading isShown={this.state.isLoading} />
-        <Home isShown={!this.state.isLoading && this.state.isShowHomePage} onEnterClicked={this.onEnterClicked} />
         <Projects isShown={!this.state.isLoading && !this.state.isShowHomePage} onBannerClicked={this.onBannerClicked} />
       </div>
     );

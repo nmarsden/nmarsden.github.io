@@ -42,16 +42,10 @@ class Projects extends Component<ProjectsProps, ProjectsState> {
     render(props: RenderableProps<ProjectsProps>): JSX.Element {
         return (
           <div className={this.projectsContainerStyles(props.isShown)}>
-              <Background isShown={props.isShown} />
-              { !this.state.selectedProject ?
-                (
-                  <div>
-                      <Banner onBannerClicked={this.onBannerClicked} />
-                      <ProjectList projects={PROJECTS} onProjectSelected={this.onProjectSelected} />
-                  </div>
-                ) : ''
-              }
-              <ProjectModal project={this.state.selectedProject} onClosed={this.onProjectModalClosed} />
+              <div>
+                  <Banner onBannerClicked={this.onBannerClicked} />
+                  <ProjectList projects={PROJECTS} onProjectSelected={this.onProjectSelected} />
+              </div>
           </div>
         );
     }

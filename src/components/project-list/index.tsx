@@ -28,13 +28,16 @@ class ProjectList extends Component<ProjectListProps, ProjectListState> {
     return (
       <Fragment>
         <div className={style.projectList}>
-          {this.props.projects.map( (project, index) =>
-            <div
+          {this.props.projects.map((project, index) =>
+            <a
               key={index}
               className={style.projectCard}
               style={`background-image: url('../../assets/screenshots/${project.name}-0-card.jpg')`}
-              onClick={this.projectCardClickHandler(project)}>{project.displayName}
-            </div>
+              href={`https://nmarsden.com/${project.name}`}
+              rel="noreferrer"
+            >
+              <div class={style.projectCardText}>{project.displayName}</div>
+            </a>
           )}
         </div>
       </Fragment>

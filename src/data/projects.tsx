@@ -12,6 +12,35 @@ export type Project = {
 
 const PROJECTS: Project[] = [
   {
+    name: 'r3f-demos',
+    displayName: 'R3F Demos',
+    numScreenshots: 0,
+    lastUpdated: 'Jan 2024',
+    mobileSupport: true,
+    description: <div>A bunch of demos built using <a href="https://github.com/pmndrs/react-three-fiber">React Three Fiber (R3F)</a>.</div>,
+    tech: <div><a
+      href="https://github.com/pmndrs/react-three-fiber">@react-three/fiber</a>, <a
+      href="https://github.com/pmndrs/drei">@react-three/drei</a>, <a
+      href="https://github.com/mrdoob/three.js">three.js</a>, <a
+      href="https://github.com/pmndrs/react-three-rapier">@react-three/rapier</a>, <a
+      href="https://www.react-spring.dev/docs/guides/react-three-fiber">@react-spring/three</a>, and <a
+      href="https://vitejs.dev/">Vite</a>.</div>
+  },
+  {
+    name: 'wordle-helper',
+    displayName: 'Wordle Helper',
+    numScreenshots: 0,
+    lastUpdated: 'Feb 2022',
+    mobileSupport: true,
+    description: <div>A tool to help play the <a href="https://www.powerlanguage.co.uk/wordle/">Wordle</a> game.</div>,
+    tech: <div><a
+      href="https://developer.mozilla.org/en-US/docs/Web/HTML">HTML</a>, <a
+      href="https://developer.mozilla.org/en-US/docs/Web/CSS">CSS</a>, <a
+      href="https://www.typescriptlang.org/">Typescript</a>, <a
+      href="https://fontawesome.com/">Font-Awesome icons</a>, and <a
+      href="https://parceljs.org/">Parcel</a>.</div>
+  },
+  {
     name: 'conway',
     displayName: 'Conway',
     numScreenshots: 12,
