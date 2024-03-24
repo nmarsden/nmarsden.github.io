@@ -12,6 +12,22 @@ export type Project = {
 
 const PROJECTS: Project[] = [
   {
+    name: 'tetris',
+    displayName: 'Tetris',
+    numScreenshots: 0,
+    lastUpdated: 'Mar 2024',
+    mobileSupport: true,
+    description: <div>A Tetris clone built using <a href="https://github.com/pmndrs/react-three-fiber">React Three Fiber (R3F)</a>.</div>,
+    tech: <div><a
+      href="https://github.com/pmndrs/react-three-fiber">@react-three/fiber</a>, <a
+      href="https://github.com/pmndrs/drei">@react-three/drei</a>, <a
+      href="https://github.com/mrdoob/three.js">three.js</a>, <a
+      href="https://www.react-spring.dev/docs/guides/react-three-fiber">@react-spring/three</a>, <a
+      href="https://github.com/goldfire/howler.js">howler</a>, <a
+      href="https://github.com/pmndrs/use-gesture">@use-gesture/react</a>, and <a
+      href="https://vitejs.dev/">Vite</a>.</div>
+  },
+  {
     name: 'r3f-demos',
     displayName: 'R3F Demos',
     numScreenshots: 0,
