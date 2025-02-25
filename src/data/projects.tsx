@@ -12,6 +12,21 @@ export type Project = {
 
 const PROJECTS: Project[] = [
   {
+    name: 'rocco',
+    displayName: 'Rocco',
+    numScreenshots: 0,
+    lastUpdated: 'Feb 2025',
+    mobileSupport: true,
+    description: <div>A digital pet rock.</div>,
+    tech: <div><a
+      href="https://github.com/pmndrs/react-three-fiber">@react-three/fiber</a>, <a
+      href="https://github.com/pmndrs/drei">@react-three/drei</a>, <a
+      href="https://github.com/mrdoob/three.js">three.js</a>, <a
+      href="https://github.com/goldfire/howler.js">howler</a>, <a
+      href="https://github.com/pmndrs/zustand">zustand</a>, <a
+      href="https://vitejs.dev/">Vite</a>.</div>
+  },
+  {
     name: 'tetris',
     displayName: 'Tetris',
     numScreenshots: 0,
