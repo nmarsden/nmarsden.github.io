@@ -12,6 +12,21 @@ export type Project = {
 
 const PROJECTS: Project[] = [
   {
+    name: 'isle-up',
+    displayName: 'Isle Up',
+    numScreenshots: 0,
+    lastUpdated: 'May 2025',
+    mobileSupport: true,
+    description: <div>Try to raise up all the islands for all 30 levels in this puzzle game.</div>,
+    tech: <div><a
+      href="https://github.com/pmndrs/react-three-fiber">@react-three/fiber</a>, <a
+      href="https://github.com/pmndrs/drei">@react-three/drei</a>, <a
+      href="https://github.com/mrdoob/three.js">three.js</a>, <a
+      href="https://github.com/goldfire/howler.js">howler</a>, <a
+      href="https://github.com/pmndrs/zustand">zustand</a>, <a
+      href="https://vitejs.dev/">Vite</a>.</div>
+  },
+  {
     name: 'rocco',
     displayName: 'Rocco',
     numScreenshots: 0,
