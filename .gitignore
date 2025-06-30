@@ -5,3 +5,4 @@
 /*.log
 .npmrc
 size-plugin.json
+.DS_Store

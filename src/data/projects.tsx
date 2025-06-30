@@ -12,6 +12,24 @@ export type Project = {
 
 const PROJECTS: Project[] = [
   {
+    name: 'castle-run',
+    displayName: 'Castle Run',
+    numScreenshots: 0,
+    lastUpdated: 'June 2025',
+    mobileSupport: true,
+    description: <div>Clear all 10 waves of oncoming enemy chess pieces.</div>,
+    tech: <div><a
+      href="https://github.com/pmndrs/react-three-fiber">@react-three/fiber</a>, <a
+      href="https://github.com/pmndrs/drei">@react-three/drei</a>, <a
+      href="https://github.com/mrdoob/three.js">three.js</a>, <a
+      href="https://github.com/goldfire/howler.js">howler</a>, <a
+      href="https://github.com/pmndrs/zustand">zustand</a>, <a
+      href="https://github.com/pmndrs/use-gesture">@use-gesture/react</a>, <a
+      href="https://gsap.com">GSAP</a>, <a
+      href="https://fontawesome.com/">Font-Awesome</a>, <a
+      href="https://vitejs.dev/">Vite</a>.</div>
+  },
+  {
     name: 'isle-up',
     displayName: 'Isle Up',
     numScreenshots: 0,
